@@ -10,6 +10,7 @@ app.use(express.urlencoded({extended: false}));
 
 app.engine('handlebars', handlebars({
     layoutsDir: __dirname + '/app/views/diretorio_layouts',
+    partialsDir: __dirname + '/app/views/partials',
     defaultLayout: 'main',
     helpers: require(__dirname + '/app/views/helpers/helpers.js')
 }));
