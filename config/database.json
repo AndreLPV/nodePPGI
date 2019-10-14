@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "chess",
+    "username": "salas",
     "password": "senha123",
-    "database": "chess",
+    "database": "sysicompteste",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

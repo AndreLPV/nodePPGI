@@ -42,6 +42,8 @@ app.use('/js', [
     express.static(__dirname + '/node_modules/bootstrap/dist/js'),
     express.static(__dirname + '/node_modules/admin-lte/plugins'),
     express.static(__dirname + '/node_modules/admin-lte/dist/js'),
+    express.static(__dirname + '/node_modules'),
+    express.static(__dirname + '/node_modules/toastr'),
     express.static(__dirname + '/public/js')
 ]);
 

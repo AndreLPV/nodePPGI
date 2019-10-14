@@ -1,10 +1,9 @@
-//var models = require('../models/index');
-//var sala = models.sala;
+var models = require('../models/index');
+var Sala = models.j17_reservas_salas;
 
 
 const index = async (req, res) => {
-    //var salas = await sala.findAll();
-    salas = [{nome:"gay"}]
+    var salas = await Sala.findAll();
     res.render('sala/index', { salas });
 };
 
@@ -12,10 +11,12 @@ const create = async (req, res) => {
     if (req.route.methods.get) {
         res.render('sala/create');
     } else {
+        if (!req.body.numero) req.body.numero = null
         try {
-            await sala.create(req.body);
+            await Sala.create(req.body);
             res.redirect('/sala');
         } catch (e) {
+            console.log(req.body)
 
             res.render('sala/create', {
                 errors: e.errors,
@@ -26,21 +27,25 @@ const create = async (req, res) => {
 };
 
 const read = async (req, res) => {
-    var sala = await sala.findByPk(req.params.id)
+    var sala = await Sala.findByPk(req.params.id)
+    console.log(sala)
     res.render('sala/read', { sala });
 };
 
 const update = async (req, res) => {
     if (req.route.methods.get) {
-        var sala = await sala.findByPk(req.params.id);
+        var sala = await Sala.findByPk(req.params.id);
         res.render('sala/update', { sala });
     } else {
+        if (!req.body.numero) req.body.numero = null
         try {
-            await sala.update(req.body, { where: { id: req.body.id } });
+
+            await Sala.update(req.body, { where: { id: req.body.id } });
             res.redirect('/sala');
         } catch (e) {
 
             res.render('sala/update', {
+                sala: req.body,
                 errors: e.errors,
             });
         }
@@ -49,11 +54,11 @@ const update = async (req, res) => {
 const remove = async (req, res) => {
     if (req.route.methods.get) {
 
-        var sala = await sala.findByPk(req.params.id);
+        var sala = await Sala.findByPk(req.params.id);
         res.render('sala/remove', { sala });
     } else {
 
-        await sala.destroy({ where: { id: req.body.id } });
+        await Sala.destroy({ where: { id: req.body.id } });
         res.redirect('/sala');
 
     }

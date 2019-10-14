@@ -13,4 +13,25 @@ const section = function (name, options) {
     this._sections[name] = options.fn(this);
     return null;
 }
-module.exports = { toLower, toUpper, eq, section };
+
+const inc = function (value) {
+    return parseInt(value) + 1;
+}
+
+const showError = function (errors, field) {
+    if (errors) {
+        const index = errors.findIndex(erro => erro.path == field)
+        if (index != -1) return errors[index].message
+    }
+    return "";
+}
+
+const hasError = function (errors, field) {
+    if (errors) {
+        const index = errors.findIndex(erro => erro.path == field)
+        if (index != -1) return "is-invalid";
+    }
+    return "";
+
+}
+module.exports = { toLower, toUpper, eq, inc, section, hasError, showError };
