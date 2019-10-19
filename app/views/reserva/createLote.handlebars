@@ -1,0 +1,70 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Nova Sala</h1>
+                <a href="/sala" class="btn btn-warning mt-2">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </a>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Página Inicial</a></li>
+                    <li class="breadcrumb-item"><a href="/sala">Salas</a></li>
+                    <li class="breadcrumb-item active">Nova Sala</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <form role="form" action="/sala/create" method="POST">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="idNome"><span class="text-danger">*</span>
+                                    Nome</label>
+                                <input type="text" class="form-control {{hasError errors "nome"}}" name="nome" value="{{sala.nome}}"
+                                    id="idNome">
+                                <div class="invalid-feedback">{{showError errors "nome"}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="idNumero">Número da Sala</label>
+                                <input type="text" class="form-control {{hasError errors "numero"}}" name="numero" value="{{sala.numero}}"
+                                    id="idNumero">
+                                <div class="invalid-feedback">{{showError errors "numero"}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="idLocal">
+                                    <span class="text-danger">*</span> Localização da
+                                    Sala</label>
+                                <input type="text" class="form-control {{hasError errors "localizacao"}}"
+                                    name="localizacao"  value="{{sala.localizacao}}" id="idLocal">
+                                <div class="invalid-feedback">{{showError errors "localizacao"}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+
+
+                </form>
+            </div>
+
+        </div>
+</section>

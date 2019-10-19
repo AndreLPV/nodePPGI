@@ -38,12 +38,15 @@ app.use('/css', [
 
 app.use('/js', [
     express.static(__dirname + '/node_modules/jquery/dist'),
+    express.static(__dirname + '/node_modules/jquery-ui-dist'),
     express.static(__dirname + '/node_modules/popper.js/dist/umd'),
     express.static(__dirname + '/node_modules/bootstrap/dist/js'),
     express.static(__dirname + '/node_modules/admin-lte/plugins'),
     express.static(__dirname + '/node_modules/admin-lte/dist/js'),
     express.static(__dirname + '/node_modules'),
     express.static(__dirname + '/node_modules/toastr'),
+    express.static(__dirname + '/node_modules/moment/min'),
+    express.static(__dirname + '/node_modules/@fullcalendar'),
     express.static(__dirname + '/public/js')
 ]);
 

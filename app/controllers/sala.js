@@ -1,9 +1,14 @@
 var models = require('../models/index');
 var Sala = models.j17_reservas_salas;
+var Reserva = models.j17_reservas;
 
 
 const index = async (req, res) => {
-    var salas = await Sala.findAll();
+    var salas = await Sala.findAll(/*{
+        include: [{ model: Reserva, as: 'reservas' }]
+    }*/);
+  
+
     res.render('sala/index', { salas });
 };
 
@@ -16,8 +21,6 @@ const create = async (req, res) => {
             await Sala.create(req.body);
             res.redirect('/sala');
         } catch (e) {
-            console.log(req.body)
-
             res.render('sala/create', {
                 errors: e.errors,
                 sala: req.body,

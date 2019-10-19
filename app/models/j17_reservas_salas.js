@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('j17_reservas_salas', {
+  const sala = sequelize.define('j17_reservas_salas', {
     nome: {
       type: DataTypes.STRING(30),
       allowNull: false,
@@ -45,4 +45,10 @@ module.exports = function (sequelize, DataTypes) {
     tableName: 'j17_reservas_salas',
     timestamps: false
   });
+  sala.associate = function (models) {
+    sala.hasMany(models.j17_reservas,{
+      foreignKey:"sala",
+    })
+  };
+  return sala
 };

@@ -34,4 +34,8 @@ const hasError = function (errors, field) {
     return "";
 
 }
-module.exports = { toLower, toUpper, eq, inc, section, hasError, showError };
+
+const jsoner = function(obj) {
+    return JSON.stringify(obj)
+ }
+module.exports = { toLower, toUpper, eq, inc, section, hasError, showError ,jsoner};

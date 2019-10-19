@@ -1,6 +1,6 @@
 {{#section 'head'}}
 
-<link rel="stylesheet" href="/js/datatables.net-bs4/css/dataTables.bootstrap4.css">
+<link rel="stylesheet" href="js/datatables.net-bs4/css/dataTables.bootstrap4.css">
 
 {{/section}}
 
@@ -10,10 +10,13 @@
         <div class="row mb-2">
 
             <div class="col-sm-6">
-                <h1>Salas</h1>
-                <a href="/sala/create" class="btn btn-primary mt-2">
-                    <i class="fas fa-plus"></i> Nova Sala
+                <h1>Reserva de Salas</h1>
+                <a href="/reserva/createLote" class="btn btn-primary mt-2">
+                    <i class="fas fa-check"></i> Reservar Salas em lote
                 </a>
+                <br>
+                Escolha uma das salas abaixo para realizar ou visualizar as reservas
+
             </div>
 
             <div class="col-sm-6">
@@ -36,24 +39,23 @@
                     <table id="tabelaSala" class="table table-striped">
                         <thead>
                             <tr>
-                                <th class="no-sort">#</th>
+
                                 <th> Nome</th>
                                 <th> Número da sala </th>
                                 <th> Localização da Sala</th>
-                                <th class="no-sort"></th>
+                                <th class="no-sort text-right"><a href="/reserva/listagem"><i class="fas fa-list"></i></a></th>
                             </tr>
                         </thead>
                         <tbody>
                             {{#each salas}}
                             <tr>
-                                <td> {{inc @index}} </td>
+
                                 <td> {{nome}} </td>
                                 <td> {{numero}} </td>
                                 <td> {{localizacao}}</td>
-                                <td class=" text-right">
-                                    <a href="/sala/read/{{id}}"><i class="fas fa-eye"></i></a>
-                                    <a href="/sala/update/{{id}}"><i class="fas fa-pen"></i></a>
-                                    <a href="/sala/remove/{{id}}"><i class="fas fa-trash-alt"></i></a>
+                                <td class="text-right">
+                                    <a href="/reserva/calendario/{{id}}"><i class="fas fa-calendar-alt"></i></a>
+                                    <a href="/reserva/listagem/{{id}}"><i class="fas fa-list"></i></a>
                                 </td>
                             </tr>
                             {{/each}}
@@ -70,23 +72,22 @@
 </section>
 {{#section 'scripts'}}
 
-<script src="/js/datatables.net/js/jquery.dataTables.js"></script>
-<script src="/js/datatables.net-bs4/js/dataTables.bootstrap4.js"></script>
+<script src="js/datatables.net/js/jquery.dataTables.js"></script>
+<script src="js/datatables.net-bs4/js/dataTables.bootstrap4.js"></script>
 <script>
     $(function () {
         $("#tabelaSala").DataTable({
-            order: [] ,
+            order: [],
             columnDefs: [{
                 "targets": 'no-sort',
                 "orderable": false,
             }],
-            paging: true,
+            paging: false,
             lengthChange: false,
             searching: false,
             ordering: true,
-            info: true,
+            info: false,
             autoWidth: false,
-            sDom: '<"top"i>rt<"bottom"flp><"clear">'
         });
     });
 </script>
