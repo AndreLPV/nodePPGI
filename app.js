@@ -47,6 +47,8 @@ app.use('/js', [
     express.static(__dirname + '/node_modules/toastr'),
     express.static(__dirname + '/node_modules/moment/min'),
     express.static(__dirname + '/node_modules/@fullcalendar'),
+    express.static(__dirname + '/node_modules/daterangepicker'),
+    express.static(__dirname + '/node_modules/tempusdominus-bootstrap-4/build/js'),
     express.static(__dirname + '/public/js')
 ]);
 

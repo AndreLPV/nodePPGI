@@ -34,6 +34,7 @@ router.post('/reserva/remove' ,       reservaController.remove);
 router.get('/reserva/listagem/:id' ,    reservaController.listagem);
 router.get('/reserva/listagem' ,    reservaController.listagem);
 router.get('/reserva/calendario/:id' ,    reservaController.calendario);
+router.get('/reserva/calendario' ,    reservaController.calendario);
 
 
 module.exports = router;

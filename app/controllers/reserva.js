@@ -15,16 +15,25 @@ const create = async (req, res) => {
     if (req.route.methods.get) {
         res.render('reserva/create');
     } else {
-        if (!req.body.numero) req.body.numero = null
         try {
             await Reserva.create(req.body);
             res.redirect('/reserva');
         } catch (e) {
-            console.log(req.body)
-
-            res.render('reserva/create', {
+            console.log(req.body);
+            console.log(e)
+            var salas = await Sala.findAll();
+            var reservas = await Reserva.findAll({
+                where: {
+                    // dataInicio: { [Op.gte]: moment().format("YYYY-MM-DD") },
+                    sala: req.body.sala
+                },
+            });
+            res.render('reserva/calendario', {
                 errors: e.errors,
                 reserva: req.body,
+                sala: req.body.sala,
+                salas,
+                reservas
             });
         }
     }
@@ -96,13 +105,13 @@ const calendario = async (req, res) => {
     var salas = await Sala.findAll();
     var reservas = await Reserva.findAll({
         where: {
-           // dataInicio: { [Op.gte]: moment().format("YYYY-MM-DD") },
+            // dataInicio: { [Op.gte]: moment().format("YYYY-MM-DD") },
             sala: req.params.id
         },
     });
-    
 
-    res.render('reserva/calendario',{reservas,salas});
+
+    res.render('reserva/calendario', { reservas, salas, sala: req.params.id });
 }
 
 
