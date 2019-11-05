@@ -38,11 +38,21 @@ module.exports = function (sequelize, DataTypes) {
     dataInicio: {
       type: DataTypes.DATEONLY,
       allowNull: false,
-      
+      validate: {
+        notEmpty: {
+          msg: "Escolha uma data"
+        },
+      }
+
     },
     dataTermino: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "Escolha uma data"
+        },
+      }
     },
     horaInicio: {
       type: DataTypes.TIME,

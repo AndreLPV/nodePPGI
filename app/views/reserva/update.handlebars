@@ -1,17 +1,25 @@
+{{#section 'head'}}
+
+<link rel='stylesheet' href="/css/datepicker.css">
+
+{{/section}}
+
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Alterar Sala: {{sala.nome}}</h1>
-                <a href="/sala" class="btn btn-warning mt-2">
+                <h1>Alterar Reserva: {{reserva.atividade}}</h1>
+                <a href="/reserva/read/{{reserva.id}}" class="btn btn-warning mt-2">
                     <i class="fas fa-arrow-left"></i> Voltar
                 </a>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Página Inicial</a></li>
-                    <li class="breadcrumb-item"><a href="/sala">Salas</a></li>
-                    <li class="breadcrumb-item"><a href="/sala/read/{{sala.id}}">{{sala.nome}}</a></li>
+                    <li class="breadcrumb-item"><a href="/reserva">Reserva Salas</a></li>
+                    <li class="breadcrumb-item"><a
+                            href="/reserva/calendario/{{reserva.salao.id}}">{{reserva.salao.nome}}</a></li>
+                    <li class="breadcrumb-item"><a href="/reserva/read/{{reserva.id}}">{{reserva.atividade}}</a></li>
                     <li class="breadcrumb-item active">Alterar</li>
                 </ol>
             </div>
@@ -23,15 +31,15 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-                <form role="form" action="/sala/update" method="POST">
+                <form class="mt-2" role="form" action="/reserva/update" method="POST">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="control-label" for="idNome"><span class="text-danger">*</span>
-                                    Nome</label>
-                                <input type="text" class="form-control {{hasError errors "nome"}}" name="nome"
-                                    value="{{sala.nome}}" id="idNome">
-                                <div class="invalid-feedback">{{showError errors "nome"}}</div>
+                                <label class="control-label" for="idAtividade"><span class="text-danger">*</span>
+                                    Atividade</label>
+                                <input type="text" class="form-control {{hasError errors "atividade"}}" name="atividade"
+                                    value="{{reserva.atividade}}" id="idAtividade">
+                                <div class="invalid-feedback">{{showError errors "atividade"}}</div>
                             </div>
                         </div>
                     </div>
@@ -39,33 +47,117 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="control-label" for="idNumero">Número da Sala</label>
-                                <input type="text" class="form-control {{hasError errors "numero"}}" name="numero"
-                                    value="{{sala.numero}}" id="idNumero">
-                                <div class="invalid-feedback">{{showError errors "numero"}}</div>
+                                <label><span class="text-danger">*</span> Tipo</label>
+                                <select class="form-control  {{hasError errors "tipo"}}" name="tipo" id="idTipo">
+                                    <option value="">Selecione um tipo</option>
+                                    <option value="Aula" {{isSelected reserva.tipo "Aula"}}>Aula</option>
+                                    <option value="Defesa" {{isSelected reserva.tipo "Defesa"}}>Defesa</option>
+                                    <option value="Exame" {{isSelected reserva.tipo "Exame"}}>Exame</option>
+                                    <option value="Reunião" {{isSelected reserva.tipo "Reunião"}}>Reunião</option>
+                                </select>
+                                <div class="invalid-feedback">{{showError errors "tipo"}}</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-3">
+                            <div class="bootstrap-timepicker">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Hora de Início: </label>
+
+                                    <div class="input-group date" id="timepicker" data-target-input="nearest">
+                                        <input type="text"
+                                            class="form-control datetimepicker-input {{hasError errors "horaInicio"}}"
+                                            value="{{reserva.horaInicio}}" data-target="#timepicker" name="horaInicio"
+                                            id="idHoraInicio" />
+                                        <div class="input-group-append" data-target="#timepicker"
+                                            data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                        </div>
+                                        <div class="invalid-feedback">{{showError errors "horaInicio"}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
                             <div class="form-group">
-                                <label class="control-label" for="idLocal">
-                                    <span class="text-danger">*</span> Localização da
-                                    Sala</label>
-                                <input type="text" class="form-control {{hasError errors "localizacao"}}"
-                                    name="localizacao" value="{{sala.localizacao}}" id="idLocal">
-                                <div class="invalid-feedback">{{showError errors "localizacao"}}</div>
+                                <label class="control-label"><span class="text-danger">*</span> Hora de Término:
+                                </label>
+                                <select class="form-control" name="horaTermino" value="{{reserva.horaTermino}}"
+                                    id="idHoraTermino" {{hasError errors "horaTermino"}}>
+                                    <option value=""></option>
+                                    <option value="07:29" {{isSelected reserva.horaTermino "07:29:00"}}>07:29</option>
+                                    <option value="07:59" {{isSelected reserva.horaTermino "07:59:00"}}>07:59</option>
+                                    <option value="08:29" {{isSelected reserva.horaTermino "08:29:00"}}>08:29</option>
+                                    <option value="08:59" {{isSelected reserva.horaTermino "08:59:00"}}>08:59</option>
+                                    <option value="09:29" {{isSelected reserva.horaTermino "09:29:00"}}>09:29</option>
+                                    <option value="09:59" {{isSelected reserva.horaTermino "09:59:00"}}>09:59</option>
+                                    <option value="10:29" {{isSelected reserva.horaTermino "10:29:00"}}>10:29</option>
+                                    <option value="10:59" {{isSelected reserva.horaTermino "10:59:00"}}>10:59</option>
+                                    <option value="11:29" {{isSelected reserva.horaTermino "11:29:00"}}>11:29</option>
+                                    <option value="11:59" {{isSelected reserva.horaTermino "11:59:00"}}>11:59</option>
+                                    <option value="12:29" {{isSelected reserva.horaTermino "12:29:00"}}>12:29</option>
+                                    <option value="12:59" {{isSelected reserva.horaTermino "12:59:00"}}>12:59</option>
+                                    <option value="13:29" {{isSelected reserva.horaTermino "13:29:00"}}>13:29</option>
+                                    <option value="13:59" {{isSelected reserva.horaTermino "13:59:00"}}>13:59</option>
+                                    <option value="14:29" {{isSelected reserva.horaTermino "14:29:00"}}>14:29</option>
+                                    <option value="14:59" {{isSelected reserva.horaTermino "14:59:00"}}>14:59</option>
+                                    <option value="15:29" {{isSelected reserva.horaTermino "15:29:00"}}>15:29</option>
+                                    <option value="15:59" {{isSelected reserva.horaTermino "15:59:00"}}>15:59</option>
+                                    <option value="16:29" {{isSelected reserva.horaTermino "16:29:00"}}>16:29</option>
+                                    <option value="16:59" {{isSelected reserva.horaTermino "16:59:00"}}>16:59</option>
+                                    <option value="17:29" {{isSelected reserva.horaTermino "17:29:00"}}>17:29</option>
+                                    <option value="17:59" {{isSelected reserva.horaTermino "17:59:00"}}>17:59</option>
+                                    <option value="18:29" {{isSelected reserva.horaTermino "18:29:00"}}>18:29</option>
+                                    <option value="18:59" {{isSelected reserva.horaTermino "18:59:00"}}>18:59</option>
+                                    <option value="19:29" {{isSelected reserva.horaTermino "19:29:00"}}>19:29</option>
+                                    <option value="19:59" {{isSelected reserva.horaTermino "19:59:00"}}>19:59</option>
+                                    <option value="20:29" {{isSelected reserva.horaTermino "20:29:00"}}>20:29</option>
+                                    <option value="20:59" {{isSelected reserva.horaTermino "20:59:00"}}>20:59</option>
+                                    <option value="21:29" {{isSelected reserva.horaTermino "21:29:00"}}>21:29</option>
+                                    <option value="21:59" {{isSelected reserva.horaTermino "21:59:00"}}>21:59</option>
+                                    <option value="22:29" {{isSelected reserva.horaTermino "22:29:00"}}>22:29</option>
+                                    <option value="22:59" {{isSelected reserva.horaTermino "22:59:00"}}>22:59</option>
+                                </select>
+                                <div class="invalid-feedback">{{showError errors "horaTermino"}}</div>
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="id" value="{{reserva.id}}">
+                    <input type="hidden" name="sala" value="{{reserva.salao}}">
+                    <input type="hidden" name="dataInicio" id="idDataInicio" value="{{reserva.dataInicio}}">
+                    <input type="hidden" name="dataTermino" id="idDataTermino" value="{{reserva.dataTermino}}">
+                    <input type="hidden" name="dataReserva" id="idDataReserva" value="{{reserva.dataReserva}}">
+                    <input type="hidden" name="idSolicitante" id="idSolicitante" value="{{reserva.idSolicitante}}">
 
-                    <input type="hidden" name="id" value="{{sala.id}}">
-                    <button type="submit" class="btn btn-primary">Salvar</button>
 
 
+                    <button type="submit" class="btn btn-success">Salvar</button>
                 </form>
             </div>
 
         </div>
 </section>
+
+{{#section 'scripts'}}
+
+
+
+<script src="/js/moment.min.js"></script>
+<script src="/js/tempusdominus-bootstrap-4.js"></script>
+
+
+<script>
+    $(function () {
+      
+
+        $('#timepicker').datetimepicker({
+            format: 'HH:mm',
+            stepping: 15,
+            disabledTimeIntervals: [[moment({ h: 0 }), moment({ h: 7 })], [moment({ h: 22, m: 1 }), moment({ h: 24 })]]
+        })
+
+    })
+</script>
+{{/section}}

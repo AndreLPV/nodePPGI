@@ -9,7 +9,7 @@
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h1>Reserva em Lote</h1>
-                <a href="/sala" class="btn btn-warning mt-2">
+                <a href="/reserva" class="btn btn-warning mt-2">
                     <i class="fas fa-arrow-left"></i> Voltar
                 </a>
             </div>
@@ -48,10 +48,10 @@
                                 <label><span class="text-danger">*</span> Tipo</label>
                                 <select class="form-control  {{hasError errors "tipo"}}" name="tipo" id="idTipo">
                                     <option value="">Selecione um tipo</option>
-                                    <option value="Aula">Aula</option>
-                                    <option value="Defesa">Defesa</option>
-                                    <option value="Exame">Exame</option>
-                                    <option value="Reunião">Reunião</option>
+                                    <option value="Aula" {{isSelected reserva.tipo "Aula"}}>Aula</option>
+                                    <option value="Defesa" {{isSelected reserva.tipo "Defesa"}}>Defesa</option>
+                                    <option value="Exame" {{isSelected reserva.tipo "Exame"}}>Exame</option>
+                                    <option value="Reunião" {{isSelected reserva.tipo "Reunião"}}>Reunião</option>
                                 </select>
                                 <div class="invalid-feedback">{{showError errors "tipo"}}</div>
                             </div>
@@ -97,15 +97,9 @@
                                     <label class="form-check-label" for="sab">Sábado</label>
                                 </div>
 
-
-
                             </div>
                         </div>
-
                     </div>
-
-
-
 
 
                     <div class="row">
@@ -114,15 +108,9 @@
                                 <label><span class="text-danger">*</span> Sala</label>
                                 <select class="form-control  {{hasError errors "sala"}}" name="sala" id="idSala">
                                     <option value="">Selecione uma das salas</option>
-
                                     {{#each salas}}
-
-                                    <option value="{{id}}">{{nome}}</option>
-
+                                    <option value="{{id}}" {{isSelected ../reserva.sala id}}>{{nome}}</option>
                                     {{/each}}
-
-
-
                                 </select>
                                 <div class="invalid-feedback">{{showError errors "tipo"}}</div>
                             </div>
@@ -172,8 +160,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="bootstrap-timepicker">
@@ -201,54 +187,49 @@
                                 <select class="form-control" name="horaTermino" value="{{reserva.horaTermino}}"
                                     id="idHoraTermino" {{hasError errors "horaTermino"}}>
                                     <option value=""></option>
-                                    <option value="07:29">07:29</option>
-                                    <option value="07:59">07:59</option>
-                                    <option value="08:29">08:29</option>
-                                    <option value="08:59">08:59</option>
-                                    <option value="09:29">09:29</option>
-                                    <option value="09:59">09:59</option>
-                                    <option value="10:29">10:29</option>
-                                    <option value="10:59">10:59</option>
-                                    <option value="11:29">11:29</option>
-                                    <option value="11:59">11:59</option>
-                                    <option value="12:29">12:29</option>
-                                    <option value="12:59">12:59</option>
-                                    <option value="13:29">13:29</option>
-                                    <option value="13:59">13:59</option>
-                                    <option value="14:29">14:29</option>
-                                    <option value="14:59">14:59</option>
-                                    <option value="15:29">15:29</option>
-                                    <option value="15:59">15:59</option>
-                                    <option value="16:29">16:29</option>
-                                    <option value="16:59">16:59</option>
-                                    <option value="17:29">17:29</option>
-                                    <option value="17:59">17:59</option>
-                                    <option value="18:29">18:29</option>
-                                    <option value="18:59">18:59</option>
-                                    <option value="19:29">19:29</option>
-                                    <option value="19:59">19:59</option>
-                                    <option value="20:29">20:29</option>
-                                    <option value="20:59">20:59</option>
-                                    <option value="21:29">21:29</option>
-                                    <option value="21:59">21:59</option>
-                                    <option value="22:29">22:29</option>
-                                    <option value="22:59">22:59</option>
+                                    <option value="07:29" {{isSelected reserva.horaTermino "07:29"}}>07:29</option>
+                                    <option value="07:59" {{isSelected reserva.horaTermino "07:59"}}>07:59</option>
+                                    <option value="08:29" {{isSelected reserva.horaTermino "08:29"}}>08:29</option>
+                                    <option value="08:59" {{isSelected reserva.horaTermino "08:59"}}>08:59</option>
+                                    <option value="09:29" {{isSelected reserva.horaTermino "09:29"}}>09:29</option>
+                                    <option value="09:59" {{isSelected reserva.horaTermino "09:59"}}>09:59</option>
+                                    <option value="10:29" {{isSelected reserva.horaTermino "10:29"}}>10:29</option>
+                                    <option value="10:59" {{isSelected reserva.horaTermino "10:59"}}>10:59</option>
+                                    <option value="11:29" {{isSelected reserva.horaTermino "11:29"}}>11:29</option>
+                                    <option value="11:59" {{isSelected reserva.horaTermino "11:59"}}>11:59</option>
+                                    <option value="12:29" {{isSelected reserva.horaTermino "12:29"}}>12:29</option>
+                                    <option value="12:59" {{isSelected reserva.horaTermino "12:59"}}>12:59</option>
+                                    <option value="13:29" {{isSelected reserva.horaTermino "13:29"}}>13:29</option>
+                                    <option value="13:59" {{isSelected reserva.horaTermino "13:59"}}>13:59</option>
+                                    <option value="14:29" {{isSelected reserva.horaTermino "14:29"}}>14:29</option>
+                                    <option value="14:59" {{isSelected reserva.horaTermino "14:59"}}>14:59</option>
+                                    <option value="15:29" {{isSelected reserva.horaTermino "15:29"}}>15:29</option>
+                                    <option value="15:59" {{isSelected reserva.horaTermino "15:59"}}>15:59</option>
+                                    <option value="16:29" {{isSelected reserva.horaTermino "16:29"}}>16:29</option>
+                                    <option value="16:59" {{isSelected reserva.horaTermino "16:59"}}>16:59</option>
+                                    <option value="17:29" {{isSelected reserva.horaTermino "17:29"}}>17:29</option>
+                                    <option value="17:59" {{isSelected reserva.horaTermino "17:59"}}>17:59</option>
+                                    <option value="18:29" {{isSelected reserva.horaTermino "18:29"}}>18:29</option>
+                                    <option value="18:59" {{isSelected reserva.horaTermino "18:59"}}>18:59</option>
+                                    <option value="19:29" {{isSelected reserva.horaTermino "19:29"}}>19:29</option>
+                                    <option value="19:59" {{isSelected reserva.horaTermino "19:59"}}>19:59</option>
+                                    <option value="20:29" {{isSelected reserva.horaTermino "20:29"}}>20:29</option>
+                                    <option value="20:59" {{isSelected reserva.horaTermino "20:59"}}>20:59</option>
+                                    <option value="21:29" {{isSelected reserva.horaTermino "21:29"}}>21:29</option>
+                                    <option value="21:59" {{isSelected reserva.horaTermino "21:59"}}>21:59</option>
+                                    <option value="22:29" {{isSelected reserva.horaTermino "22:29"}}>22:29</option>
+                                    <option value="22:59" {{isSelected reserva.horaTermino "22:59"}}>22:59</option>
                                 </select>
                                 <div class="invalid-feedback">{{showError errors "horaTermino"}}</div>
                             </div>
                         </div>
                     </div>
 
-
-
                     <input type="hidden" name="dataInicio" id="idDataInicio" value="{{reserva.dataInicio}}">
                     <input type="hidden" name="dataTermino" id="idDataTermino" value="{{reserva.dataTermino}}">
                     <input type="hidden" name="dataReserva" id="idDataReserva" value="{{reserva.dataReserva}}">
 
-
                     <button type="submit" class="btn btn-primary">Salvar</button>
-
-
                 </form>
             </div>
 
@@ -281,22 +262,17 @@
         };
         if (msg) toastr.error(msg)
         if (reserva) {
-            $("#idSala").val(reserva.sala);
-            $("#idHoraTermino").val(reserva.horaTermino);
-
             $("#idDataInicio").val(reserva.dataInicio);
             $("#idDataTermino").val(reserva.dataTermino);
 
             $("#idDataInicialVal").val(moment(reserva.dataInicial).format('DD/MM/YYYY'));
             $("#idDataTerminoVal").val(moment(reserva.dataTermino).format('DD/MM/YYYY'));
-
-            $("#idTipo").val(reserva.tipo);
         }
 
         $('#reservaForm').submit(function () {
             var dataReserva = moment().format('YYYY-MM-DD HH:mm:ss');
             $("#reservaForm #idDataReserva").val(dataReserva);
-            return true; 
+            return true;
         });
 
         $('#idDataInicialDisplay').daterangepicker({
@@ -343,8 +319,6 @@
             $("#idDataTerminoVal").val('');
             $('#idDataInicialDisplay').data('daterangepicker').maxDate = '';
         });
-
-
 
         $('#timepicker').datetimepicker({
             format: 'HH:mm',

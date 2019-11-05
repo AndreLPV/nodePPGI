@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 const toLower = function (value) {
     return value.toLowerCase();
 }
@@ -39,9 +41,19 @@ const isActive = function (field) {
     return "";
 }
 
+const isSelected = function (val1,val2) {
+    if (val1 == val2) return "selected";
+    else return "false";
+}
+
 const openMenu = function (field) {
     if (field) return "menu-open";
     return "";
+}
+
+const ddmmYYYY = function(data){
+    console.log(data)
+    return moment(data).format('DD-MM-YYYY');
 }
 
 
@@ -50,4 +62,4 @@ const jsoner = function (obj) {
     if (obj) return JSON.stringify(obj);
     return false;
 }
-module.exports = { toLower, toUpper, eq, inc, section, hasError, showError, jsoner, isActive,openMenu };
+module.exports = { toLower, toUpper, eq, inc, section, hasError, showError, jsoner, isActive,isSelected,openMenu,ddmmYYYY };

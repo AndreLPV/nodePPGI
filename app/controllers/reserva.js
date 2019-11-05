@@ -17,6 +17,7 @@ const create = async (req, res) => {
         res.render('reserva/create', { active: { reservaMenu } });
     } else {
         try {
+            console.log(req.body)
             await Reserva.create(req.body);
             res.redirect('/reserva');
         } catch (e) {
@@ -57,89 +58,57 @@ const createLote = async (req, res) => {
                 active: { reservaMenu }
             });
         } else {
-            try {
-                var arr = [];
-                if (Array.isArray(req.body.dias)) {
-                    req.body.dias.forEach(async (dia) => {
-                        let start = moment(req.body.dataInicio);
-                        let end = moment(req.body.dataTermino);
-                        let tmp = start.clone().day(dia);
-                        if (tmp.isSameOrAfter(start)) {
-                            const data = tmp.format('YYYY-MM-DD')
-                            await Reserva.create({
-                                dataReserva: req.body.dataReserva,
-                                sala: req.body.sala,
-                                idSolicitante: 1250,
-                                atividade: req.body.atividade,
-                                tipo: req.body.tipo,
-                                dataInicio: data,
-                                dataTermino: data,
-                                horaInicio: req.body.horaInicio,
-                                horaTermino: req.body.horaTermino,
-                            });
-                        }
-                        tmp.add(7, 'd');
-                        while (moment(tmp).isSameOrBefore(moment(end))) {
-                            //arr.push(tmp.format('YYYY-MM-DD'));
-                            const data = tmp.format('YYYY-MM-DD')
-                            await Reserva.create({
-                                dataReserva: req.body.dataReserva,
-                                sala: req.body.sala,
-                                idSolicitante: 1250,
-                                atividade: req.body.atividade,
-                                tipo: req.body.tipo,
-                                dataInicio: data,
-                                dataTermino: data,
-                                horaInicio: req.body.horaInicio,
-                                horaTermino: req.body.horaTermino,
-                            });
-                            tmp.add(7, 'd');
-                        }
-                    })
-                } else {
-                    let start = moment(req.body.dataInicio);
-                    let end = moment(req.body.dataTermino);
-                    let tmp = start.clone().day(req.body.dias);
-                    if (tmp.isSameOrAfter(start)) {
-                        const data = tmp.format('YYYY-MM-DD')
-                        await Reserva.create({
-                            dataReserva: req.body.dataReserva,
-                            sala: req.body.sala,
-                            idSolicitante: 1250,
-                            atividade: req.body.atividade,
-                            tipo: req.body.tipo,
-                            dataInicio: data,
-                            dataTermino: data,
-                            horaInicio: req.body.horaInicio,
-                            horaTermino: req.body.horaTermino,
-                        });
-                    }
-                    tmp.add(7, 'd');
-                    while (moment(tmp).isSameOrBefore(moment(end))) {
-                        const data = tmp.format('YYYY-MM-DD')
-                        await Reserva.create({
-                            dataReserva: req.body.dataReserva,
-                            sala: req.body.sala,
-                            idSolicitante: 1250,
-                            atividade: req.body.atividade,
-                            tipo: req.body.tipo,
-                            dataInicio: data,
-                            dataTermino: data,
-                            horaInicio: req.body.horaInicio,
-                            horaTermino: req.body.horaTermino,
-                        });
-                        tmp.add(7, 'd');
-                    }
-                }
 
+            if (!Array.isArray(req.body.dias)) req.body.dias = [req.body.dias];
+            var arr = [];
+
+            req.body.dias.forEach((dia) => {
+                let start = moment(req.body.dataInicio);
+                let end = moment(req.body.dataTermino);
+                let tmp = start.clone().day(dia);
+                if (tmp.isSameOrAfter(start)) {
+                    const data = tmp.format('YYYY-MM-DD')
+                    arr.push({
+                        dataReserva: req.body.dataReserva,
+                        sala: req.body.sala,
+                        idSolicitante: 1250,
+                        atividade: req.body.atividade,
+                        tipo: req.body.tipo,
+                        dataInicio: data,
+                        dataTermino: data,
+                        horaInicio: req.body.horaInicio,
+                        horaTermino: req.body.horaTermino,
+                    });
+                }
+                tmp.add(7, 'd');
+                while (moment(tmp).isSameOrBefore(moment(end))) {
+                    //arr.push(tmp.format('YYYY-MM-DD'));
+                    const data = tmp.format('YYYY-MM-DD')
+                    arr.push({
+                        dataReserva: req.body.dataReserva,
+                        sala: req.body.sala,
+                        idSolicitante: 1250,
+                        atividade: req.body.atividade,
+                        tipo: req.body.tipo,
+                        dataInicio: data,
+                        dataTermino: data,
+                        horaInicio: req.body.horaInicio,
+                        horaTermino: req.body.horaTermino,
+                    });
+                    tmp.add(7, 'd');
+                }
+            })
+            try {
+                console.log(arr);
+                await Reserva.bulkCreate(arr, { validate: true });
                 res.redirect('/reserva');
             } catch (e) {
                 //console.log(req.body);
                 console.log(e.errors)
+                //console.log(e);
                 var salas = await Sala.findAll();
-
                 res.render('reserva/createLote', {
-                    errors: e.errors,
+                    msg: "Um ou mais campos não preenchidos",
                     reserva: req.body,
                     salas,
                     active: { reservaMenu }
@@ -149,24 +118,45 @@ const createLote = async (req, res) => {
     }
 };
 
+/* Código para pegar os dias entre dois dias (utilizado como base para o createLote)
+        let start = moment();
+        start.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        let end = moment('2019-11-26');
+        var arr = [];
+        // pegando a segunda dessa semana 
+        let tmp = start.clone().day('1');
+        if (tmp.isSameOrAfter(start)) {   arr.push(tmp.format('YYYY-MM-DD'));}
+        tmp.add(7, 'd');
+        while (moment(tmp).isSameOrBefore(moment(end))) {
+            arr.push(tmp.format('YYYY-MM-DD'));
+            tmp.add(7, 'd');
+        }
+        console.log(arr);*/
+
 const read = async (req, res) => {
     var reserva = await Reserva.findByPk(req.params.id, {
         include: [{ model: Sala, as: 'salao' }]
     })
+    console.log(reserva)
     reserva.diaHoraReserva = moment(reserva.dataReserva).format("DD-MM-YYYY HH:mm:ss");
     res.render('reserva/read', { reserva, active: { reservaMenu } });
 };
 
 const update = async (req, res) => {
     if (req.route.methods.get) {
-        var reserva = await Reserva.findByPk(req.params.id);
+        var reserva = await Reserva.findByPk(req.params.id, {
+            include: [{ model: Sala, as: 'salao' }]
+        });
         res.render('reserva/update', { reserva, active: { reservaMenu } });
     } else {
-        if (!req.body.numero) req.body.numero = null
         try {
-
-            await Reserva.update(req.body, { where: { id: req.body.id } });
-            res.redirect('/reserva');
+            await Reserva.update({
+                atividade: req.body.atividade,
+                tipo: req.body.tipo,
+                horaInicio: req.body.horaInicio,
+                horaTermino: req.body.horaTermino
+            }, { where: { id: req.body.id } });
+            res.redirect('/reserva/read/'+req.body.id);
         } catch (e) {
 
             res.render('reserva/update', {
@@ -179,12 +169,12 @@ const update = async (req, res) => {
 }
 const remove = async (req, res) => {
     if (req.route.methods.get) {
-
-        var reserva = await Reserva.findByPk(req.params.id);
+        var reserva = await Reserva.findByPk(req.params.id, {
+            include: [{ model: Sala, as: 'salao' }]
+        });
         res.render('reserva/remove', { reserva, active: { reservaMenu } });
     } else {
-
-        await reserva.destroy({ where: { id: req.body.id } });
+        await Reserva.destroy({ where: { id: req.body.id } });
         res.redirect('/reserva');
 
     }
@@ -216,6 +206,8 @@ const listagem = async (req, res) => {
 
 const calendario = async (req, res) => {
     var salas = await Sala.findAll();
+    var sala = await Sala.findByPk(req.params.id);
+
     var reservas = await Reserva.findAll({
         where: {
             // dataInicio: { [Op.gte]: moment().format("YYYY-MM-DD") },
@@ -224,7 +216,7 @@ const calendario = async (req, res) => {
     });
 
 
-    res.render('reserva/calendario', { reservas, salas, sala: req.params.id, active: { reservaMenu } });
+    res.render('reserva/calendario', { reservas, salas, sala, active: { reservaMenu } });
 }
 
 
