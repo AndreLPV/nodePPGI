@@ -36,7 +36,7 @@
 </section>
 
 
-<div class="modal fade" id="reservaForm">
+<div class="modal fade show" id="reservaForm">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -86,10 +86,11 @@
                                 <div class="form-group">
                                     <label><span class="text-danger">*</span> Hora de Início: </label>
 
-                                    <div class="input-group date" id="timepicker"
-                                        data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input {{hasError errors "horaInicio"}}"
-                                            data-target="#timepicker" name="horaInicio" />
+                                    <div class="input-group date" id="timepicker" data-target-input="nearest">
+                                        <input type="text"
+                                            class="form-control datetimepicker-input {{hasError errors "horaInicio"}}"
+                                            value="{{reserva.horaInicio}}" data-target="#timepicker" name="horaInicio"
+                                            id="idHoraInicio" />
                                         <div class="input-group-append" data-target="#timepicker"
                                             data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="far fa-clock"></i></div>
@@ -104,7 +105,7 @@
                                 <label class="control-label"><span class="text-danger">*</span> Hora de Término:
                                 </label>
                                 <select class="form-control" name="horaTermino" value="{{reserva.horaTermino}}"
-                                    id="idHoraTermino"  {{hasError errors "horaTermino"}}>
+                                    id="idHoraTermino" {{hasError errors "horaTermino"}}>
                                     <option value=""></option>
                                     <option value="07:29">07:29</option>
                                     <option value="07:59">07:59</option>
@@ -144,7 +145,11 @@
                         </div>
                     </div>
                     <input type="hidden" name="sala" value="{{sala}}">
-             
+                    <input type="hidden" name="dataInicio" id="idDataInicio" value="{{reserva.dataInicio}}">
+                    <input type="hidden" name="dataTermino" id="idDataTermino" value="{{reserva.dataTermino}}">
+                    <input type="hidden" name="dataReserva" id="idDataReserva" value="{{reserva.dataReserva}}">
+                    <input type="hidden" name="idSolicitante" id="idSolicitante" value="{{reserva.idSolicitante}}">
+
                     <button type="submit" class="btn btn-success">Salvar</button>
                 </form>
             </div>
@@ -173,7 +178,22 @@
 
 
 <script>
-    var reservas = {{{ jsoner reservas }}};
+
+
+    const reservas = {{{ jsoner reservas }}};
+    const reserva = {{{ jsoner reserva }}};
+    const erros = {{{ jsoner errors }}};
+    if (erros) {
+
+        if (reserva) {
+            $("#reservaForm #idHoraTermino").val(reserva.horaTermino);
+            $("#reservaForm #idTipo").val(reserva.tipo);
+        }
+        $('#reservaForm').modal('show')
+    };
+
+
+
     toastr.options = {
         "closeButton": true,
         "newestOnTop": true,
@@ -182,7 +202,30 @@
         "positionClass": "toast-top-center",
 
     }
+
     $(function () {
+        let start = moment();
+        start.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        let end = moment('2019-11-26');
+
+        var arr = [];
+        // Get "next" monday
+        let tmp = start.clone().day('1');
+
+
+        if (tmp.isSameOrAfter(start)) {
+            arr.push(tmp.format('YYYY-MM-DD'));
+        }
+        tmp.add(7, 'd');
+
+        while (moment(tmp).isSameOrBefore(moment(end))) {
+
+            arr.push(tmp.format('YYYY-MM-DD'));
+            tmp.add(7, 'd');
+        }
+
+        console.log(arr);
+
 
         $('#timepicker').datetimepicker({
             format: 'HH:mm',
@@ -194,6 +237,8 @@
                 title: reserva.atividade,
                 start: reserva.dataInicio + " " + reserva.horaInicio,
                 end: reserva.dataTermino + " " + reserva.horaTermino,
+                url: '/reserva/read/' + reserva.id,
+
             }
         })
 
@@ -224,8 +269,29 @@
             },
             dateClick: function (info) {
 
+
                 if (moment(info.dateStr).isSameOrAfter(moment().format('YYYY-MM-DD'))) {
                     if (info.view.type === 'timeGridWeek') {
+                        var horaInicio = moment(info.dateStr).format('HH:mm');
+                        var horaTermino = moment(info.dateStr).add(29, 'm').format('HH:mm');
+
+                        var dataInicio = moment(info.dateStr).format('YYYY-MM-DD');
+                        var dataTermino = moment(info.dateStr).format('YYYY-MM-DD');
+
+                        var dataReserva = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+                        $("#reservaForm #idDataInicio").val(dataInicio);
+                        $("#reservaForm #idDataTermino").val(dataTermino);
+                        $("#reservaForm #idDataReserva").val(dataReserva);
+
+                        $("#reservaForm #idHoraInicio").val(horaInicio);
+                        $("#reservaForm #idHoraTermino").val(horaTermino);
+
+                        $("#reservaForm #idSolicitante").val("500");
+
+
+
                         $('#reservaForm').modal('show');
                     } else {
                         console.log('mes');

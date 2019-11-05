@@ -10,7 +10,7 @@
         <div class="row mb-2">
 
             <div class="col-sm-6">
-                <h1>Reserva de Salas - Listagem</h1>
+                <h1>Reserva de Salas - Listagem {{#if sala}} de {{sala.nome}} {{else}} Geral {{/if}}</h1>
                 <a href="/reserva" class="btn btn-warning mt-2">
                     <i class="fas fa-arrow-left"></i> Lista de Salas
                 </a>
@@ -84,6 +84,9 @@
                 "targets": 'no-sort',
                 "orderable": false,
             }],
+            language: {
+                emptyTable: "Esta sala não possui reservas agendadas no momento"
+            },
             pageLength: 20,
             paging: true,
             lengthChange: false,

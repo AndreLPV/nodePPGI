@@ -25,6 +25,8 @@ router.post('/sala/remove' ,       salaController.remove);
 router.get('/reserva' ,               reservaController.index);
 router.get('/reserva/create' ,        reservaController.create);
 router.post('/reserva/create' ,       reservaController.create);
+router.get('/reserva/createLote' ,    reservaController.createLote);
+router.post('/reserva/createLote' ,   reservaController.createLote);
 router.get('/reserva/read/:id' ,      reservaController.read);
 router.get('/reserva/update/:id' ,    reservaController.update);
 router.post('/reserva/update' ,       reservaController.update);

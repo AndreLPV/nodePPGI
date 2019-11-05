@@ -2,6 +2,7 @@ var models = require('../models/index');
 var Sala = models.j17_reservas_salas;
 var Reserva = models.j17_reservas;
 
+var reservaMenu = true;
 
 const index = async (req, res) => {
     var salas = await Sala.findAll(/*{
@@ -9,7 +10,7 @@ const index = async (req, res) => {
     }*/);
   
 
-    res.render('sala/index', { salas });
+    res.render('sala/index', { salas ,active:{reservaMenu,salas:true}});
 };
 
 const create = async (req, res) => {

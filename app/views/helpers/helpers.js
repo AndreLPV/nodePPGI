@@ -32,10 +32,22 @@ const hasError = function (errors, field) {
         if (index != -1) return "is-invalid";
     }
     return "";
-
 }
 
-const jsoner = function(obj) {
-    return JSON.stringify(obj)
- }
-module.exports = { toLower, toUpper, eq, inc, section, hasError, showError ,jsoner};
+const isActive = function (field) {
+    if (field) return "active";
+    return "";
+}
+
+const openMenu = function (field) {
+    if (field) return "menu-open";
+    return "";
+}
+
+
+
+const jsoner = function (obj) {
+    if (obj) return JSON.stringify(obj);
+    return false;
+}
+module.exports = { toLower, toUpper, eq, inc, section, hasError, showError, jsoner, isActive,openMenu };
