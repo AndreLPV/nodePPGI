@@ -4,10 +4,10 @@
             <div class="col-sm-6">
                 <h1>Reserva: {{reserva.atividade}} para {{ddmmYYYY reserva.dataInicio}} - {{reserva.horaInicio}}</h1>
                 <div class="margin mt-2">
-                    <a href="/reserva/calendario/{{reserva.salao.id}}" class="btn btn-warning">
+                    <a href="/reserva/calendario/{{reserva.sala.id}}" class="btn btn-warning">
                         <i class="fas fa-calendar-alt"></i> Calendário de Reservas
                     </a>
-                    <a href="/reserva/listagem/{{reserva.salao.id}}" class="btn btn-warning">
+                    <a href="/reserva/listagem/{{reserva.sala.id}}" class="btn btn-warning">
                         <i class="fas fa-list"></i> Listagem de Reservas
                     </a>
                     <a href="/reserva/update/{{reserva.id}}" class="btn btn-info">
@@ -22,7 +22,7 @@
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Página Inicial</a></li>
                     <li class="breadcrumb-item"><a href="/reserva">Reserva Salas</a></li>
-                    <li class="breadcrumb-item"><a href="/reserva/calendario/{{reserva.salao.id}}">{{reserva.salao.nome}}</a></li>
+                    <li class="breadcrumb-item"><a href="/reserva/calendario/{{reserva.sala.id}}">{{reserva.sala.nome}}</a></li>
                     <li class="breadcrumb-item active">Reserva: {{reserva.atividade}} para {{ddmmYYYY reserva.dataInicio}} - {{reserva.horaInicio}}</li>
                 </ol>
             </div>
@@ -47,7 +47,7 @@
 
                         <tr>
                             <td>Sala</td>
-                            <td>{{reserva.salao.nome}}</td>
+                            <td>{{reserva.sala.nome}}</td>
                         </tr>
 
                         <tr>

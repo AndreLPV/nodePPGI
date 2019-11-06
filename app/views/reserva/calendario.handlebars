@@ -36,7 +36,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label>Selecione uma Sala:</label>
-                    <select class="form-control" name="sala" id="idSala"
+                    <select class="form-control" name="id_sala" id="idSala"
                         onchange="if (this.value) window.location.href=this.value">
                         {{#each salas}}
                         <option value="/reserva/calendario/{{id}}" {{isSelected ../sala.id id}}>{{nome}}</option>
@@ -177,11 +177,11 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="sala" value="{{sala.id}}">
+                    <input type="hidden" name="id_sala" value="{{sala.id}}">
                     <input type="hidden" name="dataInicio" id="idDataInicio" value="{{reserva.dataInicio}}">
                     <input type="hidden" name="dataTermino" id="idDataTermino" value="{{reserva.dataTermino}}">
                     <input type="hidden" name="dataReserva" id="idDataReserva" value="{{reserva.dataReserva}}">
-                    <input type="hidden" name="idSolicitante" id="idSolicitante" value="{{reserva.idSolicitante}}">
+                    <input type="hidden" name="id_solicitante" id="idSolicitante" value="{{reserva.id_solicitante}}">
 
                     <button type="submit" class="btn btn-success">Salvar</button>
                 </form>
@@ -216,7 +216,7 @@
     const reserva = {{{ jsoner reserva }}};
     const erros = {{{ jsoner errors }}};
     if (erros) {
-        // Se a view vier com erros, abrir de volta o modal e setar os valores inseridos anteriormente. 
+  
         if (reserva) {
             $("#reservaForm #idHoraTermino").val(reserva.horaTermino);
             $("#reservaForm #idTipo").val(reserva.tipo);
@@ -227,14 +227,12 @@
 
     $(function () {
 
-        // Instanciando o input do horario.
         $('#timepicker').datetimepicker({
             format: 'HH:mm',
             stepping: 15,
             disabledTimeIntervals: [[moment({ h: 0 }), moment({ h: 7 })], [moment({ h: 22, m: 1 }), moment({ h: 24 })]]
         })
 
-        // Transformando as reservas no formato que o calendario utiliza
         var reservasEventos = reservas.map((reserva) => {
             return {
                 title: reserva.atividade,
@@ -247,7 +245,6 @@
         var Calendar = FullCalendar.Calendar;
         var calendarEl = document.getElementById('calendar');
 
-        // Configurando parametros do calendario
         var calendar = new Calendar(calendarEl, {
             plugins: ['bootstrap', 'interaction', 'dayGrid', 'timeGrid'],
             header: {
@@ -269,14 +266,11 @@
                 omitZeroMinute: false,
 
             },
-            // Callback chamado quando se troca a visao do calendario de mes pra semana e vice-versa.
             viewSkeletonRender: function (info) {
                 if (info.view.type !== 'timeGridWeek') $('#printCalendar').attr('disabled', 'disabled');
                 else $('#printCalendar').removeAttr('disabled');
             },
 
-            // Calbback chamado quando se clica em um espaço vazio no calendario
-            // Aqui se abre o modal com os valores da data clicada.
             dateClick: function (info) {
                 if (moment(info.dateStr).isSameOrAfter(moment().format('YYYY-MM-DD'))) {
                     if (info.view.type === 'timeGridWeek') {

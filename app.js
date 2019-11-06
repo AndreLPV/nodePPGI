@@ -7,8 +7,6 @@ const sass = require('node-sass-middleware');
 
 app.use(express.urlencoded({extended: false}));
 
-//Configurando handlebars
-//Utilizando partials para separar o header e o sidebar em arquivos próprios 
 app.engine('handlebars', handlebars({
     layoutsDir: __dirname + '/app/views/diretorio_layouts',
     partialsDir: __dirname + '/app/views/partials',
@@ -61,10 +59,15 @@ app.use('/js', [
 
 app.use(router);
 
-
-
-
-
 app.listen(3000, function () {
     console.log("Express app iniciada na porta 3000.");
 });
+
+/*
+
+npx sequelize model:create --underscored --name reserva --attributes "dataReserva:date,id_sala:integer,
+id_solicitante:integer,atividade:string,tipo:string,dataInicio:dateonly,dataTermino:dateonly,horaInicio:time,horaTermino:time"
+
+npx sequelize model:create --underscored --name sala --attributes "nome:string,numero:integer,localizacao:string"
+
+*/

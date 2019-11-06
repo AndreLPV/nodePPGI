@@ -1,9 +1,9 @@
 /* jshint indent: 2 */
 
 module.exports = function (sequelize, DataTypes) {
-  const sala = sequelize.define('j17_reservas_salas', {
+  const sala = sequelize.define('sala', {
     nome: {
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: {
@@ -18,7 +18,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     numero: {
-      type: DataTypes.INTEGER(5),
+      type: DataTypes.INTEGER,
       allowNull: true,
       validate: {
         isNumeric: {
@@ -27,7 +27,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     localizacao: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: {
@@ -42,13 +42,11 @@ module.exports = function (sequelize, DataTypes) {
       }
     }
   }, {
-    tableName: 'j17_reservas_salas',
+    tableName: 'sala',
     timestamps: false
   });
   sala.associate = function (models) {
-    sala.hasMany(models.j17_reservas,{
-      foreignKey:"sala",
-    })
+    sala.hasMany(models.reserva,{foreignKey: 'id_sala'})
   };
   return sala
 };

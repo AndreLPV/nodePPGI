@@ -1,9 +1,9 @@
 /* jshint indent: 2 */
 
 module.exports = function (sequelize, DataTypes) {
-  const reserva = sequelize.define('j17_reservas', {
+  const reserva = sequelize.define('reserva', {
     id: {
-      type: DataTypes.INTEGER(10),
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
@@ -13,12 +13,16 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     },
-    idSolicitante: {
-      type: DataTypes.INTEGER(10),
+    id_sala: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    id_solicitante: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     atividade: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: {
@@ -27,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     tipo: {
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: {
@@ -75,14 +79,11 @@ module.exports = function (sequelize, DataTypes) {
 
 
   }, {
-    tableName: 'j17_reservas',
+    tableName: 'reserva',
     timestamps: false
   });
   reserva.associate = function (models) {
-    reserva.belongsTo(models.j17_reservas_salas, {
-      foreignKey: "sala",
-      as: 'salao'
-    })
+    reserva.belongsTo(models.sala,{foreignKey: 'id_sala'})
   };
   return reserva
 };

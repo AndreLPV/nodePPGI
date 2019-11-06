@@ -18,7 +18,7 @@
                     <li class="breadcrumb-item"><a href="/">Página Inicial</a></li>
                     <li class="breadcrumb-item"><a href="/reserva">Reserva Salas</a></li>
                     <li class="breadcrumb-item"><a
-                            href="/reserva/calendario/{{reserva.salao.id}}">{{reserva.salao.nome}}</a></li>
+                            href="/reserva/calendario/{{reserva.sala.id}}">{{reserva.sala.nome}}</a></li>
                     <li class="breadcrumb-item"><a href="/reserva/read/{{reserva.id}}">{{reserva.atividade}}</a></li>
                     <li class="breadcrumb-item active">Alterar</li>
                 </ol>
@@ -125,11 +125,11 @@
                         </div>
                     </div>
                     <input type="hidden" name="id" value="{{reserva.id}}">
-                    <input type="hidden" name="sala" value="{{reserva.salao}}">
+                    <input type="hidden" name="id_sala" value="{{reserva.id_sala}}">
                     <input type="hidden" name="dataInicio" id="idDataInicio" value="{{reserva.dataInicio}}">
                     <input type="hidden" name="dataTermino" id="idDataTermino" value="{{reserva.dataTermino}}">
                     <input type="hidden" name="dataReserva" id="idDataReserva" value="{{reserva.dataReserva}}">
-                    <input type="hidden" name="idSolicitante" id="idSolicitante" value="{{reserva.idSolicitante}}">
+                    <input type="hidden" name="id_solicitante" id="idSolicitante" value="{{reserva.id_solicitante}}">
 
 
 
