@@ -7,7 +7,8 @@ const sass = require('node-sass-middleware');
 
 app.use(express.urlencoded({extended: false}));
 
-
+//Configurando handlebars
+//Utilizando partials para separar o header e o sidebar em arquivos próprios 
 app.engine('handlebars', handlebars({
     layoutsDir: __dirname + '/app/views/diretorio_layouts',
     partialsDir: __dirname + '/app/views/partials',

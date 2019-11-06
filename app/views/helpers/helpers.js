@@ -10,12 +10,18 @@ const eq = function (val1, val2) {
     return val1 === val2;
 }
 
+// Esse section é pra organizar melhor as dependência das views.
+// Pra não colocar tudo dentro lá do layout main, uso isso aqui 
+// pra chamar estilos/scripts especificos que provavelmente
+// vão ser chamados uma única vez em uma view especifica
+
 const section = function (name, options) {
     if (!this._sections) this._sections = {};
     this._sections[name] = options.fn(this);
     return null;
 }
 
+// Uso isso aqui na tabela das salas pra ela não começar do zero naquela coluna da esquerda
 const inc = function (value) {
     return parseInt(value) + 1;
 }
@@ -41,9 +47,10 @@ const isActive = function (field) {
     return "";
 }
 
+
 const isSelected = function (val1,val2) {
     if (val1 == val2) return "selected";
-    else return "false";
+    else return "";
 }
 
 const openMenu = function (field) {
@@ -57,7 +64,10 @@ const ddmmYYYY = function(data){
 }
 
 
-
+// Isso aqui é pra pegar os dados do handlebars no script, varri a internet procurando
+// uma solução oficial mas não achei, esse aqui foi o melhor jeito.
+// tem que retornar false, se retornar null dependendo do que
+// é passado pra cá pode bugar o handlebars, dando erro, travando a página e por ai vai. 
 const jsoner = function (obj) {
     if (obj) return JSON.stringify(obj);
     return false;

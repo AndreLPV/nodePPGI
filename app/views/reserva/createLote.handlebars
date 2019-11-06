@@ -187,38 +187,38 @@
                                 <select class="form-control" name="horaTermino" value="{{reserva.horaTermino}}"
                                     id="idHoraTermino" {{hasError errors "horaTermino"}}>
                                     <option value=""></option>
-                                    <option value="07:29" {{isSelected reserva.horaTermino "07:29"}}>07:29</option>
-                                    <option value="07:59" {{isSelected reserva.horaTermino "07:59"}}>07:59</option>
-                                    <option value="08:29" {{isSelected reserva.horaTermino "08:29"}}>08:29</option>
-                                    <option value="08:59" {{isSelected reserva.horaTermino "08:59"}}>08:59</option>
-                                    <option value="09:29" {{isSelected reserva.horaTermino "09:29"}}>09:29</option>
-                                    <option value="09:59" {{isSelected reserva.horaTermino "09:59"}}>09:59</option>
-                                    <option value="10:29" {{isSelected reserva.horaTermino "10:29"}}>10:29</option>
-                                    <option value="10:59" {{isSelected reserva.horaTermino "10:59"}}>10:59</option>
-                                    <option value="11:29" {{isSelected reserva.horaTermino "11:29"}}>11:29</option>
-                                    <option value="11:59" {{isSelected reserva.horaTermino "11:59"}}>11:59</option>
-                                    <option value="12:29" {{isSelected reserva.horaTermino "12:29"}}>12:29</option>
-                                    <option value="12:59" {{isSelected reserva.horaTermino "12:59"}}>12:59</option>
-                                    <option value="13:29" {{isSelected reserva.horaTermino "13:29"}}>13:29</option>
-                                    <option value="13:59" {{isSelected reserva.horaTermino "13:59"}}>13:59</option>
-                                    <option value="14:29" {{isSelected reserva.horaTermino "14:29"}}>14:29</option>
-                                    <option value="14:59" {{isSelected reserva.horaTermino "14:59"}}>14:59</option>
-                                    <option value="15:29" {{isSelected reserva.horaTermino "15:29"}}>15:29</option>
-                                    <option value="15:59" {{isSelected reserva.horaTermino "15:59"}}>15:59</option>
-                                    <option value="16:29" {{isSelected reserva.horaTermino "16:29"}}>16:29</option>
-                                    <option value="16:59" {{isSelected reserva.horaTermino "16:59"}}>16:59</option>
-                                    <option value="17:29" {{isSelected reserva.horaTermino "17:29"}}>17:29</option>
-                                    <option value="17:59" {{isSelected reserva.horaTermino "17:59"}}>17:59</option>
-                                    <option value="18:29" {{isSelected reserva.horaTermino "18:29"}}>18:29</option>
-                                    <option value="18:59" {{isSelected reserva.horaTermino "18:59"}}>18:59</option>
-                                    <option value="19:29" {{isSelected reserva.horaTermino "19:29"}}>19:29</option>
-                                    <option value="19:59" {{isSelected reserva.horaTermino "19:59"}}>19:59</option>
-                                    <option value="20:29" {{isSelected reserva.horaTermino "20:29"}}>20:29</option>
-                                    <option value="20:59" {{isSelected reserva.horaTermino "20:59"}}>20:59</option>
-                                    <option value="21:29" {{isSelected reserva.horaTermino "21:29"}}>21:29</option>
-                                    <option value="21:59" {{isSelected reserva.horaTermino "21:59"}}>21:59</option>
-                                    <option value="22:29" {{isSelected reserva.horaTermino "22:29"}}>22:29</option>
-                                    <option value="22:59" {{isSelected reserva.horaTermino "22:59"}}>22:59</option>
+                                    <option value="07:29">07:29</option>
+                                    <option value="07:59">07:59</option>
+                                    <option value="08:29">08:29</option>
+                                    <option value="08:59">08:59</option>
+                                    <option value="09:29">09:29</option>
+                                    <option value="09:59">09:59</option>
+                                    <option value="10:29">10:29</option>
+                                    <option value="10:59">10:59</option>
+                                    <option value="11:29">11:29</option>
+                                    <option value="11:59">11:59</option>
+                                    <option value="12:29">12:29</option>
+                                    <option value="12:59">12:59</option>
+                                    <option value="13:29">13:29</option>
+                                    <option value="13:59">13:59</option>
+                                    <option value="14:29">14:29</option>
+                                    <option value="14:59">14:59</option>
+                                    <option value="15:29">15:29</option>
+                                    <option value="15:59">15:59</option>
+                                    <option value="16:29">16:29</option>
+                                    <option value="16:59">16:59</option>
+                                    <option value="17:29">17:29</option>
+                                    <option value="17:59">17:59</option>
+                                    <option value="18:29">18:29</option>
+                                    <option value="18:59">18:59</option>
+                                    <option value="19:29">19:29</option>
+                                    <option value="19:59">19:59</option>
+                                    <option value="20:29">20:29</option>
+                                    <option value="20:59">20:59</option>
+                                    <option value="21:29">21:29</option>
+                                    <option value="21:59">21:59</option>
+                                    <option value="22:29">22:29</option>
+                                    <option value="22:59">22:59</option>
                                 </select>
                                 <div class="invalid-feedback">{{showError errors "horaTermino"}}</div>
                             </div>
@@ -247,7 +247,7 @@
 <script src="/js/moment.min.js"></script>
 <script src="/js/daterangepicker.js"></script>
 <script src="/js/tempusdominus-bootstrap-4.js"></script>
-<script src="/js/toastr.js"></script>
+
 
 <script>
 
@@ -257,26 +257,28 @@
 
 
     $(function () {
-        toastr.options = {
-            positionClass: 'toast-top-center'
-        };
+
         if (msg) toastr.error(msg)
+
+        // Se a view vier com erros, abrir de volta o modal e setar os valores inseridos anteriormente. 
         if (reserva) {
             $("#idDataInicio").val(reserva.dataInicio);
             $("#idDataTermino").val(reserva.dataTermino);
+
+            $("#idHoraTermino").val(reserva.horaTermino);
 
             $("#idDataInicialVal").val(moment(reserva.dataInicial).format('DD/MM/YYYY'));
             $("#idDataTerminoVal").val(moment(reserva.dataTermino).format('DD/MM/YYYY'));
         }
 
+        // Antes de submeter pegar o horario atual e mandar junto no form
         $('#reservaForm').submit(function () {
             var dataReserva = moment().format('YYYY-MM-DD HH:mm:ss');
             $("#reservaForm #idDataReserva").val(dataReserva);
             return true;
         });
 
-        $('#idDataInicialDisplay').daterangepicker({
-
+        configCalendar = {
             autoUpdateInput: false,
             singleDatePicker: true,
             alwaysShowCalendars: true,
@@ -286,7 +288,13 @@
                 monthNames: ["Janeiro", "Fevereiro", "Março", "Abril",
                     "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
             },
-        });
+        };
+
+        // Instanciando o calendário pros inputs data inicial e data termino (Ali em baixo) com as configurações daqui de cima
+        $('#idDataInicialDisplay').daterangepicker(configCalendar);
+
+        // Mudando os valores das datas, na view e mostrada de um jeito mas no submit vai do jeito padrao (YYYY-MM-DD)
+        // Tambem coloco limites pra nenhum espertinho colocar uma data final anterior a inicial e vice-versa
         $('#idDataInicialDisplay').on('apply.daterangepicker', function (ev, picker) {
             $("#idDataInicio").val(picker.startDate.format('YYYY-MM-DD'));
             $("#idDataInicialVal").val(picker.startDate.format('DD/MM/YYYY'));
@@ -298,17 +306,7 @@
             $('#idDataTerminoDisplay').data('daterangepicker').minDate = '';
         });
 
-        $('#idDataTerminoDisplay').daterangepicker({
-            autoUpdateInput: false,
-            singleDatePicker: true,
-            alwaysShowCalendars: true,
-            drops: "up",
-            locale: {
-                daysOfWeek: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
-                monthNames: ["Janeiro", "Fevereiro", "Março", "Abril",
-                    "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
-            },
-        });
+        $('#idDataTerminoDisplay').daterangepicker(configCalendar);
         $('#idDataTerminoDisplay').on('apply.daterangepicker', function (ev, picker) {
             $("#idDataTermino").val(picker.startDate.format('YYYY-MM-DD'));
             $("#idDataTerminoVal").val(picker.startDate.format('DD/MM/YYYY'));

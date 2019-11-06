@@ -13,7 +13,5 @@ const sobre = (req, res) => {
     });
 };
 
-const ui = (req, res) => {
-    res.render('main/ui',{layout:'uiLayout'});
-};
-module.exports = { index, sobre,ui }
+
+module.exports = { index, sobre }

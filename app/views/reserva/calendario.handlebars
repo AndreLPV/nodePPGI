@@ -50,10 +50,10 @@
                 Clique em uma reserva para visualizá-la ou clique em um dia e horário para criar uma reserva
             </div>
         </div>
-    </div><!-- /.container-fluid -->
+    </div>
 </section>
 
-<!-- Main content -->
+
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -210,13 +210,13 @@
 
 
 <script>
-
-
+    //Pegando no script as variaves passadas no controlador.
+    // Muito cuidado aqui, as 3 chaves precisam estar juntas e na mesma linha, se nao a view trava/buga.
     const reservas = {{{ jsoner reservas }}};
     const reserva = {{{ jsoner reserva }}};
     const erros = {{{ jsoner errors }}};
     if (erros) {
-
+        // Se a view vier com erros, abrir de volta o modal e setar os valores inseridos anteriormente. 
         if (reserva) {
             $("#reservaForm #idHoraTermino").val(reserva.horaTermino);
             $("#reservaForm #idTipo").val(reserva.tipo);
@@ -227,24 +227,27 @@
 
     $(function () {
 
+        // Instanciando o input do horario.
         $('#timepicker').datetimepicker({
             format: 'HH:mm',
             stepping: 15,
             disabledTimeIntervals: [[moment({ h: 0 }), moment({ h: 7 })], [moment({ h: 22, m: 1 }), moment({ h: 24 })]]
         })
+
+        // Transformando as reservas no formato que o calendario utiliza
         var reservasEventos = reservas.map((reserva) => {
             return {
                 title: reserva.atividade,
                 start: reserva.dataInicio + " " + reserva.horaInicio,
                 end: reserva.dataTermino + " " + reserva.horaTermino,
                 url: '/reserva/read/' + reserva.id,
-
             }
         })
 
         var Calendar = FullCalendar.Calendar;
         var calendarEl = document.getElementById('calendar');
 
+        // Configurando parametros do calendario
         var calendar = new Calendar(calendarEl, {
             plugins: ['bootstrap', 'interaction', 'dayGrid', 'timeGrid'],
             header: {
@@ -254,7 +257,6 @@
             },
             defaultView: 'timeGridWeek',
 
-            //Random default events
             events: reservasEventos,
             allDaySlot: false,
             minTime: "07:00:00",
@@ -267,14 +269,15 @@
                 omitZeroMinute: false,
 
             },
+            // Callback chamado quando se troca a visao do calendario de mes pra semana e vice-versa.
             viewSkeletonRender: function (info) {
                 if (info.view.type !== 'timeGridWeek') $('#printCalendar').attr('disabled', 'disabled');
                 else $('#printCalendar').removeAttr('disabled');
             },
 
+            // Calbback chamado quando se clica em um espaço vazio no calendario
+            // Aqui se abre o modal com os valores da data clicada.
             dateClick: function (info) {
-
-
                 if (moment(info.dateStr).isSameOrAfter(moment().format('YYYY-MM-DD'))) {
                     if (info.view.type === 'timeGridWeek') {
                         var horaInicio = moment(info.dateStr).format('HH:mm');
@@ -304,9 +307,6 @@
                         $("#reservaForm #idSolicitante").val("500");
                         $('#reservaForm').modal('show');
                     }
-                    //console.log(moment(info.dateStr).format('YYYY-MM-DDTHH:mm:ss'))
-                    //console.log(moment(info.dateStr).add(29,'m').format('YYYY-MM-DDTHH:mm:ss'))
-                    //$('#reservaForm').modal('show')
                 } else {
                     toastr["warning"]("A data para reserva deve ser igual ou superior que a data de hoje", "Data Inválida")
                 }
@@ -317,5 +317,4 @@
         // $('#calendar').fullCalendar()
     })
 </script>
-
 {{/section}}

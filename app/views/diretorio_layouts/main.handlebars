@@ -6,10 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
+    <!-- Adicione estilos aqui se eles são usados em todas as views -->
+
     <link rel='stylesheet' href="/css/main.css">
-
-
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    
+    <!-- Essa section é um helper, nas views, o que tiver dentro das {#section head} (2 brackets na verdade, vai bugar aqui a página se tiver dois no comentário)
+         vai ser substituido aqui, assim é possível chamar estilos especificos para uma página
+         Ou tira isso e coloca todos os estilos aqui, mas acho que isso afeta a performace do site ¯\_(ツ)_/¯ -->
     {{{_sections.head}}}
 
 
@@ -21,6 +25,8 @@
     <div class="wrapper">
 
         {{> header }}
+        <!-- Pra passar as variaveis pra partial tem que passar esse this
+             Ae usa normal la com {nome} <- 2 brackets, vai bugar aqui a página se tiver dois no comentário -->
         {{> sidebar this}}
 
         <div class="content-wrapper">
@@ -38,8 +44,9 @@
         </footer>
     </div>
 
-    <script src="/js/jquery.min.js"></script>
+    <!-- Adicione plugin/scripts aqui se eles são usados em todas as views ou boa parte -->
 
+    <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/adminlte.js"></script>
     <script src="/js/toastr.js"></script>
@@ -52,6 +59,9 @@
             "positionClass": "toast-top-center",
         }
     </script>
+    <!-- Essa section é um helper, nas views, o que tiver dentro das {#section 'scripts'} 
+         vai ser substituido aqui, assim é possível chamar scripts especificos para uma página.
+         Ou tira isso e coloca todos os scripts aqui, mas acho que isso afeta a performace do site ¯\_(ツ)_/¯-->
     {{{_sections.scripts}}}
 
 
