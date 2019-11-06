@@ -13,34 +13,31 @@ const index = async (req, res) => {
 };
 
 const create = async (req, res) => {
-    if (req.route.methods.get) {
-        res.render('reserva/create', { active: { reservaMenu } });
-    } else {
-        try {
-            console.log(req.body)
-            await Reserva.create(req.body);
-            res.redirect('/reserva');
-        } catch (e) {
-            //console.log(req.body);
-            console.log(e.errors)
-            var salas = await Sala.findAll();
-            var reservas = await Reserva.findAll({
-                where: {
-                    // dataInicio: { [Op.gte]: moment().format("YYYY-MM-DD") },
-                    sala: req.body.sala
-                },
-            });
+    try {
+        console.log(req.body)
+        await Reserva.create(req.body);
+        res.redirect('/reserva');
+    } catch (e) {
+        //console.log(req.body);
+        console.log(e.errors)
+        var salas = await Sala.findAll();
+        var reservas = await Reserva.findAll({
+            where: {
+                // dataInicio: { [Op.gte]: moment().format("YYYY-MM-DD") },
+                sala: req.body.sala
+            },
+        });
 
-            res.render('reserva/calendario', {
-                errors: e.errors,
-                reserva: req.body,
-                sala: req.body.sala,
-                salas,
-                reservas,
-                active: { reservaMenu }
-            });
-        }
+        res.render('reserva/calendario', {
+            errors: e.errors,
+            reserva: req.body,
+            sala: req.body.sala,
+            salas,
+            reservas,
+            active: { reservaMenu }
+        });
     }
+
 };
 
 const createLote = async (req, res) => {
@@ -53,6 +50,17 @@ const createLote = async (req, res) => {
             var salas = await Sala.findAll();
             res.render('reserva/createLote', {
                 msg: "Marque pelo menos um dia da semana",
+                reserva: req.body,
+                salas,
+                active: { reservaMenu }
+            });
+            //Raramente a sala é passada como 0, aconteceu 2 vezes quando eu testava testando
+            //Eu não faço idéia de como reproduzir esse caso pra ver onde é o erro e corrigi-lo,
+            //Então por precaução tô fazendo esse if gambiarra aqui.
+        } else if (!req.body.sala) {
+            var salas = await Sala.findAll();
+            res.render('reserva/createLote', {
+                msg: "Escolha uma sala",
                 reserva: req.body,
                 salas,
                 active: { reservaMenu }
@@ -119,19 +127,20 @@ const createLote = async (req, res) => {
 };
 
 /* Código para pegar os dias entre dois dias (utilizado como base para o createLote)
-        let start = moment();
-        start.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
-        let end = moment('2019-11-26');
-        var arr = [];
-        // pegando a segunda dessa semana 
-        let tmp = start.clone().day('1');
-        if (tmp.isSameOrAfter(start)) {   arr.push(tmp.format('YYYY-MM-DD'));}
+    let start = moment();
+    start.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+    let end = moment('2019-11-26');
+    var arr = [];
+    // pegando a segunda dessa semana (domingo = 0, segunda = 1, terça = 2...)
+    let tmp = start.clone().day('1');
+    if (tmp.isSameOrAfter(start)) {   arr.push(tmp.format('YYYY-MM-DD'));}
+    tmp.add(7, 'd');
+    while (moment(tmp).isSameOrBefore(moment(end))) {
+        arr.push(tmp.format('YYYY-MM-DD'));
         tmp.add(7, 'd');
-        while (moment(tmp).isSameOrBefore(moment(end))) {
-            arr.push(tmp.format('YYYY-MM-DD'));
-            tmp.add(7, 'd');
-        }
-        console.log(arr);*/
+    }
+    console.log(arr);
+*/
 
 const read = async (req, res) => {
     var reserva = await Reserva.findByPk(req.params.id, {
@@ -156,7 +165,7 @@ const update = async (req, res) => {
                 horaInicio: req.body.horaInicio,
                 horaTermino: req.body.horaTermino
             }, { where: { id: req.body.id } });
-            res.redirect('/reserva/read/'+req.body.id);
+            res.redirect('/reserva/read/' + req.body.id);
         } catch (e) {
 
             res.render('reserva/update', {

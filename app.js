@@ -32,8 +32,13 @@ app.use('/img', [
 
 ]);
 
+app.use('/webfonts', [
+    express.static(__dirname + '/public/webfonts')
+]);
+
 app.use('/css', [
     express.static(__dirname + '/public/css'),
+    
 ]);
 
 app.use('/js', [
@@ -41,7 +46,8 @@ app.use('/js', [
     express.static(__dirname + '/node_modules/jquery-ui-dist'),
     express.static(__dirname + '/node_modules/popper.js/dist/umd'),
     express.static(__dirname + '/node_modules/bootstrap/dist/js'),
-    express.static(__dirname + '/node_modules/admin-lte/plugins'),
+    express.static(__dirname + '/node_modules/@fortawesome/'),
+  
     express.static(__dirname + '/node_modules/admin-lte/dist/js'),
     express.static(__dirname + '/node_modules'),
     express.static(__dirname + '/node_modules/toastr'),

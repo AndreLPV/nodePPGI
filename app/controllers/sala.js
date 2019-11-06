@@ -61,6 +61,7 @@ const remove = async (req, res) => {
         var sala = await Sala.findByPk(req.params.id);
         res.render('sala/remove', { sala });
     } else {
+        console.log(req.body);
 
         await Sala.destroy({ where: { id: req.body.id } });
         res.redirect('/sala');
