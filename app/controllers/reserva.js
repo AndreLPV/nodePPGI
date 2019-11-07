@@ -8,34 +8,14 @@ var Sala = models.sala;
 var reservaMenu = true;
 
 const index = async (req, res) => {
-    var salas = await Sala.findAll();
+    var salas = await Sala.findAll({
+
+        include: [{
+            model: Reserva,
+            attributes: ['dataInicio']
+        }]
+    });
     res.render('reserva/index', { salas, active: { reservaMenu, reservas: true } });
-};
-
-
-const create = async (req, res) => {
-    try {
-        await Reserva.create(req.body);
-        res.redirect('/reserva');
-    } catch (e) {
-        var salas = await Sala.findAll();
-        var sala = await Sala.findByPk( req.body.id_sala);
-        var reservas = await Reserva.findAll({
-            where: {
-                // dataInicio: { [Op.gte]: moment().format("YYYY-MM-DD") },
-                id_sala: req.body.id_sala
-            },
-        });
-        res.render('reserva/calendario', {
-            errors: e.errors,
-            reserva: req.body,
-            sala,
-            salas,
-            reservas,
-            active: { reservaMenu }
-        });
-    }
-
 };
 
 const createLote = async (req, res) => {
@@ -43,7 +23,7 @@ const createLote = async (req, res) => {
         var salas = await Sala.findAll();
         res.render('reserva/createLote', { salas, active: { reservaMenu } });
     } else {
-      
+
         if (!req.body.dias) {
             var salas = await Sala.findAll();
             res.render('reserva/createLote', {
@@ -52,7 +32,6 @@ const createLote = async (req, res) => {
                 salas,
                 active: { reservaMenu }
             });
-
         } else if (!req.body.id_sala) {
             var salas = await Sala.findAll();
             res.render('reserva/createLote', {
@@ -63,12 +42,11 @@ const createLote = async (req, res) => {
             });
         } else {
             if (!Array.isArray(req.body.dias)) req.body.dias = [req.body.dias];
-        
+
+            var arr = [];
             req.body.dias.forEach((dia) => {
                 let start = moment(req.body.dataInicio);
                 let end = moment(req.body.dataTermino);
-
-       
                 let tmp = start.clone().day(dia);
                 if (tmp.isSameOrAfter(start)) {
                     const data = tmp.format('YYYY-MM-DD')
@@ -102,11 +80,9 @@ const createLote = async (req, res) => {
                 }
             })
             try {
-
                 await Reserva.bulkCreate(arr, { validate: true });
                 res.redirect('/reserva');
             } catch (e) {
-     
                 var salas = await Sala.findAll();
                 res.render('reserva/createLote', {
                     msg: "Um ou mais campos não preenchidos",
@@ -120,8 +96,6 @@ const createLote = async (req, res) => {
 };
 
 const read = async (req, res) => {
-
- 
     var reserva = await Reserva.findByPk(req.params.id, {
         include: [{ model: Sala, as: 'sala' }]
     })
@@ -182,7 +156,7 @@ const listagem = async (req, res) => {
         var sala = await Sala.findByPk(req.params.id);
 
     } else {
-  
+
         var reservas = await Reserva.findAll({
             where: {
                 dataInicio: { [Op.gte]: moment().format("YYYY-MM-DD") }
@@ -194,16 +168,44 @@ const listagem = async (req, res) => {
 }
 
 const calendario = async (req, res) => {
-    var salas = await Sala.findAll();
-    var sala = await Sala.findByPk(req.params.id);
+    if (req.route.methods.get) {
+        var salas = await Sala.findAll();
+        var sala = await Sala.findByPk(req.params.id);
 
-    var reservas = await Reserva.findAll({
-        where: {
-            // dataInicio: { [Op.gte]: moment().format("YYYY-MM-DD") },
-            id_sala: req.params.id
-        },
-    });
-    res.render('reserva/calendario', { reservas, salas, sala, active: { reservaMenu } });
+        var reservas = await Reserva.findAll({
+            where: {
+                // Descomentar a linha abaixo faz com que as reservas mostradas no calendário sejam apenas do dia atual pra frente.
+                // dataInicio: { [Op.gte]: moment().format("YYYY-MM-DD") },
+                id_sala: req.params.id
+            },
+        });
+        res.render('reserva/calendario', { reservas, salas, sala, active: { reservaMenu } });
+    } else {
+        try {
+            await Reserva.create(req.body);
+            res.redirect('/reserva');
+        } catch (e) {
+            console.log(req.body.sala);
+            var salas = await Sala.findAll();
+            var sala = await Sala.findByPk(req.body.id_sala);
+            var reservas = await Reserva.findAll({
+                where: {
+                    // Descomentar a linha abaixo faz com que as reservas mostradas no calendário sejam apenas do dia atual pra frente.
+                    // dataInicio: { [Op.gte]: moment().format("YYYY-MM-DD") },
+                    id_sala: req.body.id_sala
+                },
+            });
+
+            res.render('reserva/calendario', {
+                errors: e.errors,
+                reserva: req.body,
+                sala,
+                salas,
+                reservas,
+                active: { reservaMenu }
+            });
+        }
+    }
 }
 
-module.exports = { index, read, create, update, remove, listagem, calendario, createLote }
+module.exports = { index, read, update, remove, listagem, calendario, createLote }

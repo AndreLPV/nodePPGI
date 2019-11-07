@@ -33,7 +33,6 @@ const create = async (req, res) => {
 
 const read = async (req, res) => {
     var sala = await Sala.findByPk(req.params.id)
-    console.log(sala)
     res.render('sala/read', { sala });
 };
 

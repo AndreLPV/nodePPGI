@@ -76,14 +76,21 @@ module.exports = function (sequelize, DataTypes) {
         },
       }
     },
+    createdAt: {
+      field: 'created_at',
+      type: DataTypes.DATE,
+    },
+    updatedAt: {
+      field: 'updated_at',
+      type: DataTypes.DATE,
+    },
 
 
   }, {
-    tableName: 'reserva',
-    timestamps: false
+    tableName: 'reserva'
   });
   reserva.associate = function (models) {
-    reserva.belongsTo(models.sala,{foreignKey: 'id_sala'})
+    reserva.belongsTo(models.sala, { foreignKey: 'id_sala' })
   };
   return reserva
 };

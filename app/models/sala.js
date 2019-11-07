@@ -40,13 +40,20 @@ module.exports = function (sequelize, DataTypes) {
         },
 
       }
-    }
+    },
+    createdAt: {
+      field: 'created_at',
+      type: DataTypes.DATE,
+    },
+    updatedAt: {
+      field: 'updated_at',
+      type: DataTypes.DATE,
+    },
   }, {
-    tableName: 'sala',
-    timestamps: false
+    tableName: 'sala'
   });
   sala.associate = function (models) {
-    sala.hasMany(models.reserva,{foreignKey: 'id_sala'})
+    sala.hasMany(models.reserva, { foreignKey: 'id_sala' })
   };
   return sala
 };
