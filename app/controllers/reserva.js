@@ -9,35 +9,18 @@ var reservaMenu = true;
 
 //Controlador da view index (View com as salas e as opções de ver no calendário ou em lista as reservas)
 const index = async (req, res) => {
-    var salas = await Sala.findAll();
+    var salas = await Sala.findAll({
+
+        include: [{
+            model: Reserva,
+            as: 'reservas',
+            attributes: ['dataInicio']
+        }]
+    });
     res.render('reserva/index', { salas, active: { reservaMenu, reservas: true } });
 };
 
-//Controlador da parte que registra reservas da view calendario (Reservas criadas clicando no calendário são tratadas aqui)
-const create = async (req, res) => {
-    try {
-        await Reserva.create(req.body);
-        res.redirect('/reserva');
-    } catch (e) {
-        var salas = await Sala.findAll();
-        var reservas = await Reserva.findAll({
-            where: {
-                // Descomentar a linha abaixo faz com que as reservas mostradas no calendário sejam apenas do dia atual pra frente.
-                // dataInicio: { [Op.gte]: moment().format("YYYY-MM-DD") },
-                sala: req.body.sala
-            },
-        });
-        res.render('reserva/calendario', {
-            errors: e.errors,
-            reserva: req.body,
-            sala: req.body.sala,
-            salas,
-            reservas,
-            active: { reservaMenu }
-        });
-    }
 
-};
 
 //Controlador da view createLote (Reservas criadas pelo opção em lote no index são tratadas aqui)
 const createLote = async (req, res) => {
@@ -46,6 +29,7 @@ const createLote = async (req, res) => {
         res.render('reserva/createLote', { salas, active: { reservaMenu } });
     } else {
         // Verificando se algum dia da semana foi marcado
+
         if (!req.body.dias) {
             var salas = await Sala.findAll();
             res.render('reserva/createLote', {
@@ -57,7 +41,7 @@ const createLote = async (req, res) => {
             // Verificando se a sala foi escolhida
             // Aconteceu 2 vezes quando eu testava testando a sala ser passada como 0 mesmo eu tendo escolhido uma
             // Bem estranho, como não consigo reproduzir o caso pra ver onde é o erro e corrigi-lo,
-            // por precaução tô fazendo esse if gambiarra aqui ¯\_(ツ)_/¯.
+            // por precaução tô fazendo esse if aqui.
         } else if (!req.body.sala) {
             var salas = await Sala.findAll();
             res.render('reserva/createLote', {
@@ -70,8 +54,8 @@ const createLote = async (req, res) => {
             // Os dias da semana são passado como array, mas se for marcado apenas um dia vai vir uma string
             // então aqui eu passo pra array pra poder fazer tudo no forEach.
             if (!Array.isArray(req.body.dias)) req.body.dias = [req.body.dias];
-        
 
+            var arr = [];
             req.body.dias.forEach((dia) => {
                 let start = moment(req.body.dataInicio);
                 let end = moment(req.body.dataTermino);
@@ -232,20 +216,47 @@ const listagem = async (req, res) => {
 
 // Controlador da view calendario (disparado quando se clica no primeiro icone na view index)
 const calendario = async (req, res) => {
-    var salas = await Sala.findAll();
-    var sala = await Sala.findByPk(req.params.id);
+    if (req.route.methods.get) {
+        var salas = await Sala.findAll();
+        var sala = await Sala.findByPk(req.params.id);
 
-    var reservas = await Reserva.findAll({
-        where: {
-            // Descomentar a linha abaixo faz com que as reservas mostradas no calendário sejam apenas do dia atual pra frente.
-            // dataInicio: { [Op.gte]: moment().format("YYYY-MM-DD") },
-            sala: req.params.id
-        },
-    });
-    res.render('reserva/calendario', { reservas, salas, sala, active: { reservaMenu } });
+        var reservas = await Reserva.findAll({
+            where: {
+                // Descomentar a linha abaixo faz com que as reservas mostradas no calendário sejam apenas do dia atual pra frente.
+                // dataInicio: { [Op.gte]: moment().format("YYYY-MM-DD") },
+                sala: req.params.id
+            },
+        });
+        res.render('reserva/calendario', { reservas, salas, sala, active: { reservaMenu } });
+    } else {
+        try {
+            await Reserva.create(req.body);
+            res.redirect('/reserva');
+        } catch (e) {
+            console.log(req.body.sala);
+            var salas = await Sala.findAll();
+            var sala = await Sala.findByPk(req.body.sala);
+            var reservas = await Reserva.findAll({
+                where: {
+                    // Descomentar a linha abaixo faz com que as reservas mostradas no calendário sejam apenas do dia atual pra frente.
+                    // dataInicio: { [Op.gte]: moment().format("YYYY-MM-DD") },
+                    sala: req.body.sala
+                },
+            });
+
+            res.render('reserva/calendario', {
+                errors: e.errors,
+                reserva: req.body,
+                sala,
+                salas,
+                reservas,
+                active: { reservaMenu }
+            });
+        }
+    }
 }
 
 
 
 
-module.exports = { index, read, create, update, remove, listagem, calendario, createLote }
+module.exports = { index, read, update, remove, listagem, calendario, createLote }

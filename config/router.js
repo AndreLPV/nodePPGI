@@ -25,8 +25,7 @@ router.post('/sala/remove' ,       salaController.remove);
 //reservaController
 
 router.get('/reserva' ,               reservaController.index);
-router.get('/reserva/create' ,        reservaController.create);
-router.post('/reserva/create' ,       reservaController.create);
+
 router.get('/reserva/createLote' ,    reservaController.createLote);
 router.post('/reserva/createLote' ,   reservaController.createLote);
 router.get('/reserva/read/:id' ,      reservaController.read);
@@ -39,6 +38,6 @@ router.post('/reserva/remove' ,       reservaController.remove);
 router.get('/reserva/listagem/:id' ,    reservaController.listagem);
 router.get('/reserva/listagem' ,    reservaController.listagem);
 router.get('/reserva/calendario/:id' ,    reservaController.calendario);
-router.get('/reserva/calendario' ,    reservaController.calendario);
+router.post('/reserva/calendario' ,    reservaController.calendario);
 
 module.exports = router;

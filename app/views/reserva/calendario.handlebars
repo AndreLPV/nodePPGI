@@ -36,7 +36,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label>Selecione uma Sala:</label>
-                    <select class="form-control" name="sala" id="idSala"
+                    <select class="form-control" id="idSala"
                         onchange="if (this.value) window.location.href=this.value">
                         {{#each salas}}
                         <option value="/reserva/calendario/{{id}}" {{isSelected ../sala.id id}}>{{nome}}</option>
@@ -84,7 +84,7 @@
                     Voltar</button>
 
 
-                <form class="mt-2" role="form" action="/reserva/create" method="POST">
+                <form class="mt-2" role="form" action="/reserva/calendario" method="POST">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -220,6 +220,7 @@
         if (reserva) {
             $("#reservaForm #idHoraTermino").val(reserva.horaTermino);
             $("#reservaForm #idTipo").val(reserva.tipo);
+            
         }
         $('#reservaForm').modal('show')
     };

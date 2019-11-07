@@ -43,6 +43,8 @@
                                 <th> Nome</th>
                                 <th> Número da sala </th>
                                 <th> Localização da Sala</th>
+                                <th> Reservas Ativas</th>
+                                
                                 <th class="no-sort text-right"><a href="/reserva/listagem"><i class="fas fa-list"></i></a></th>
                             </tr>
                         </thead>
@@ -53,6 +55,7 @@
                                 <td> {{nome}} </td>
                                 <td> {{numero}} </td>
                                 <td> {{localizacao}}</td>
+                                <td> {{contarAtivos reservas}}</td>
                                 <td class="text-right">
                                     <a href="/reserva/calendario/{{id}}"><i class="fas fa-calendar-alt"></i></a>
                                     <a href="/reserva/listagem/{{id}}"><i class="fas fa-list"></i></a>

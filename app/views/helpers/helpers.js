@@ -63,6 +63,11 @@ const ddmmYYYY = function(data){
     return moment(data).format('DD-MM-YYYY');
 }
 
+const contarAtivos = function(array){
+    return  array.filter((obj) => moment(obj.dataInicio).isSameOrAfter(moment().format("YYYY-MM-DD"))).length;
+
+}
+
 
 // Isso aqui é pra pegar os dados do handlebars no script, varri a internet procurando
 // uma solução oficial mas não achei, esse aqui foi o melhor jeito.
@@ -72,4 +77,4 @@ const jsoner = function (obj) {
     if (obj) return JSON.stringify(obj);
     return false;
 }
-module.exports = { toLower, toUpper, eq, inc, section, hasError, showError, jsoner, isActive,isSelected,openMenu,ddmmYYYY };
+module.exports = { contarAtivos, toLower, toUpper, eq, inc, section, hasError, showError, jsoner, isActive,isSelected,openMenu,ddmmYYYY };

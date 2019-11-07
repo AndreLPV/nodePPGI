@@ -47,7 +47,7 @@ module.exports = function (sequelize, DataTypes) {
   });
   sala.associate = function (models) {
     sala.hasMany(models.j17_reservas,{
-      foreignKey:"sala",
+      foreignKey:"sala",as:"reservas"
     })
   };
   return sala

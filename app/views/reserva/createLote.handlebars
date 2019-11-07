@@ -107,7 +107,7 @@
                             <div class="form-group">
                                 <label><span class="text-danger">*</span> Sala</label>
                                 <select class="form-control  {{hasError errors "sala"}}" name="sala" id="idSala">
-                                    <option>Selecione uma das salas</option>
+                                    <option value="">Selecione uma das salas</option>
                                     {{#each salas}}
                                     <option value="{{id}}" {{isSelected ../reserva.sala id}}>{{nome}}</option>
                                     {{/each}}
