@@ -68,6 +68,8 @@ app.listen(3000, function () {
 npx sequelize model:create --underscored --name reserva --attributes "dataReserva:date,id_sala:integer,
 id_solicitante:integer,atividade:string,tipo:string,dataInicio:dateonly,dataTermino:dateonly,horaInicio:time,horaTermino:time"
 
-npx sequelize model:create --underscored --name sala2 --attributes "nome:string,numero:integer,localizacao:string"
+npx sequelize model:create --underscored --name sala --attributes "nome:string,numero:integer,localizacao:string"
+
+npx sequelize model:create --underscored --name usuario --attributes "nome:string"
 
 */

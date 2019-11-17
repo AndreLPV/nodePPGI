@@ -4,6 +4,7 @@ var moment = require('moment');
 
 var Reserva = models.reserva;
 var Sala = models.sala;
+var User = models.usuario;
 
 var reservaMenu = true;
 
@@ -53,7 +54,7 @@ const createLote = async (req, res) => {
                     arr.push({
                         dataReserva: req.body.dataReserva,
                         id_sala: req.body.id_sala,
-                        id_solicitante: 1250,
+                        id_solicitante: 1,
                         atividade: req.body.atividade,
                         tipo: req.body.tipo,
                         dataInicio: data,
@@ -68,7 +69,7 @@ const createLote = async (req, res) => {
                     arr.push({
                         dataReserva: req.body.dataReserva,
                         id_sala: req.body.id_sala,
-                        id_solicitante: 1250,
+                        id_solicitante: 1,
                         atividade: req.body.atividade,
                         tipo: req.body.tipo,
                         dataInicio: data,
@@ -97,7 +98,7 @@ const createLote = async (req, res) => {
 
 const read = async (req, res) => {
     var reserva = await Reserva.findByPk(req.params.id, {
-        include: [{ model: Sala, as: 'sala' }]
+        include: [{ model: Sala, as: 'sala' }, { model: User, as: 'usuario' }]
     })
     console.log(reserva)
     reserva.diaHoraReserva = moment(reserva.dataReserva).format("DD-MM-YYYY HH:mm:ss");
@@ -182,6 +183,7 @@ const calendario = async (req, res) => {
         res.render('reserva/calendario', { reservas, salas, sala, active: { reservaMenu } });
     } else {
         try {
+            req.body.id_solicitante = 1;
             await Reserva.create(req.body);
             res.redirect('/reserva');
         } catch (e) {

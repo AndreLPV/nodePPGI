@@ -91,6 +91,7 @@ module.exports = function (sequelize, DataTypes) {
   });
   reserva.associate = function (models) {
     reserva.belongsTo(models.sala, { foreignKey: 'id_sala' })
+    reserva.belongsTo(models.usuario, { foreignKey: 'id_solicitante' })
   };
   return reserva
 };
