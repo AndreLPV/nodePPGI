@@ -1,7 +1,5 @@
-{{#section 'head'}}
-
-<link rel='stylesheet' href="/css/calendar.css">
-
+{{#section 'sidebar'}}
+{{> sidebar menu_open_reserva=true nav_link_reserva=true }}
 {{/section}}
 
 <section class="content-header">
@@ -36,8 +34,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label>Selecione uma Sala:</label>
-                    <select class="form-control" id="idSala"
-                        onchange="if (this.value) window.location.href=this.value">
+                    <select class="form-control" id="idSala" onchange="if (this.value) window.location.href=this.value">
                         {{#each salas}}
                         <option value="/reserva/calendario/{{id}}" {{isSelected ../sala.id id}}>{{nome}}</option>
                         {{/each}}
@@ -195,20 +192,6 @@
 
 {{#section 'scripts'}}
 
-
-<script src="/js/jquery-ui.min.js"></script>
-
-<script src="/js/core/main.min.js"></script>
-<script src="/js/daygrid/main.min.js"></script>
-<script src="/js/timegrid/main.min.js"></script>
-<script src="/js/interaction/main.min.js"></script>
-<script src="/js/bootstrap/main.min.js"></script>
-
-<script src="/js/moment.min.js"></script>
-<script src="/js/daterangepicker.js"></script>
-<script src="/js/tempusdominus-bootstrap-4.js"></script>
-
-
 <script>
     //Pegando no script as variaves passadas no controlador.
     // Muito cuidado aqui, as 3 chaves precisam estar juntas e na mesma linha, se nao a view trava/buga.
@@ -220,7 +203,7 @@
         if (reserva) {
             $("#reservaForm #idHoraTermino").val(reserva.horaTermino);
             $("#reservaForm #idTipo").val(reserva.tipo);
-            
+
         }
         $('#reservaForm').modal('show')
     };

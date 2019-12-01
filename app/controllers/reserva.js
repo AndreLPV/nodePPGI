@@ -6,8 +6,6 @@ var Reserva = models.j17_reservas;
 var Sala = models.j17_reservas_salas;
 var User = models.j17_user;
 
-var reservaMenu = true;
-
 //Controlador da view index (View com as salas e as opções de ver no calendário ou em lista as reservas)
 const index = async (req, res) => {
     var salas = await Sala.findAll({
@@ -18,7 +16,7 @@ const index = async (req, res) => {
             attributes: ['dataInicio']
         }]
     });
-    res.render('reserva/index', { salas, active: { reservaMenu, reservas: true } });
+    res.render('reserva/index', { salas });
 };
 
 
@@ -27,7 +25,7 @@ const index = async (req, res) => {
 const createLote = async (req, res) => {
     if (req.route.methods.get) {
         var salas = await Sala.findAll();
-        res.render('reserva/createLote', { salas, active: { reservaMenu } });
+        res.render('reserva/createLote', { salas });
     } else {
         // Verificando se algum dia da semana foi marcado
 
@@ -36,8 +34,7 @@ const createLote = async (req, res) => {
             res.render('reserva/createLote', {
                 msg: "Marque pelo menos um dia da semana",
                 reserva: req.body,
-                salas,
-                active: { reservaMenu }
+                salas
             });
             // Verificando se a sala foi escolhida
             // Aconteceu 2 vezes quando eu testava testando a sala ser passada como 0 mesmo eu tendo escolhido uma
@@ -48,8 +45,7 @@ const createLote = async (req, res) => {
             res.render('reserva/createLote', {
                 msg: "Escolha uma sala",
                 reserva: req.body,
-                salas,
-                active: { reservaMenu }
+                salas
             });
         } else {
             // Os dias da semana são passado como array, mas se for marcado apenas um dia vai vir uma string
@@ -111,7 +107,7 @@ const createLote = async (req, res) => {
                     msg: "Um ou mais campos não preenchidos",
                     reserva: req.body,
                     salas,
-                    active: { reservaMenu }
+              
                 });
             }
         }
@@ -145,7 +141,7 @@ const read = async (req, res) => {
         include: [{ model: Sala, as: 'salao' }, { model: User, as: 'user' }]
     })
     reserva.diaHoraReserva = moment(reserva.dataReserva).format("DD-MM-YYYY HH:mm:ss");
-    res.render('reserva/read', { reserva, active: { reservaMenu } });
+    res.render('reserva/read', { reserva });
 };
 
 // Controlador da view update (disparado quando se clica no lápis na view read)
@@ -154,7 +150,7 @@ const update = async (req, res) => {
         var reserva = await Reserva.findByPk(req.params.id, {
             include: [{ model: Sala, as: 'salao' }]
         });
-        res.render('reserva/update', { reserva, active: { reservaMenu } });
+        res.render('reserva/update', { reserva });
     } else {
         try {
             await Reserva.update({
@@ -168,7 +164,7 @@ const update = async (req, res) => {
             res.render('reserva/update', {
                 reserva: req.body,
                 errors: e.errors,
-                active: { reservaMenu }
+                
             });
         }
     };
@@ -204,7 +200,7 @@ const listagem = async (req, res) => {
             include: [{ model: Sala, as: 'salao' }]
         });
     }
-    res.render('reserva/listagem', { sala, reservas, active: { reservaMenu } });
+    res.render('reserva/listagem', { sala, reservas});
 }
 
 // Controlador da view calendario (disparado quando se clica no primeiro icone na view index)
@@ -220,7 +216,7 @@ const calendario = async (req, res) => {
                 sala: req.params.id
             },
         });
-        res.render('reserva/calendario', { reservas, salas, sala, active: { reservaMenu } });
+        res.render('reserva/calendario', { reservas, salas, sala });
     } else {
         try {
             await Reserva.create(req.body);
@@ -243,7 +239,7 @@ const calendario = async (req, res) => {
                 sala,
                 salas,
                 reservas,
-                active: { reservaMenu }
+               
             });
         }
     }

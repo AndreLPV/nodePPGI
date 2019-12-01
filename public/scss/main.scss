@@ -1,11 +1,42 @@
 
+
+
 @import "styles.scss";
+
+//============================= AdminLTE scss ======================================
+
 @import "../../node_modules/admin-lte/build/scss/AdminLTE.scss";
+
+//============================= Toastr scss ======================================
+
 @import "../../node_modules/toastr/toastr.scss";
+
+//============================= Fontawesome scss ======================================
 
 @import "../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
 @import "../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
 @import "../../node_modules/@fortawesome/fontawesome-free/scss/regular.scss";
+
+//============================= Calendar scss ======================================
+
+@import "../../node_modules/@fullcalendar/core/main.min";
+@import "../../node_modules/@fullcalendar/daygrid/main.min";
+@import "../../node_modules/@fullcalendar/timegrid/main.min";
+@import "../../node_modules/@fullcalendar/bootstrap/main.min";
+
+
+//============================= Date picker scss ======================================
+
+@import "../../node_modules/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4";
+@import "../../node_modules/daterangepicker/daterangepicker";
+
+//============================= Datetable scss ======================================
+
+@import "../../node_modules/datatables.net-bs4/css/dataTables.bootstrap4";
+
+
+//============================= OverlayScrollbars scss ======================================
+@import "../../node_modules/overlayscrollbars/css/OverlayScrollbars";
 
 
 

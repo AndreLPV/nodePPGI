@@ -6,34 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <!-- Adicione estilos aqui se eles são usados em todas as views -->
-
     <link rel='stylesheet' href="/css/main.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    
-    <!-- Essa section é um helper, nas views, o que tiver dentro das {#section head} (2 brackets na verdade, vai bugar aqui a página se tiver dois no comentário)
-         vai ser substituido aqui, assim é possível chamar estilos especificos para uma página
-         Ou tira isso e coloca todos os estilos aqui, mas acho que isso afeta a performace do site -->
-    {{{_sections.head}}}
-
-
 
 </head>
 
-<body class="hold-transition sidebar-mini">
-
+<body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
-
         {{> header }}
-        <!-- Pra passar as variaveis pra partial tem que passar esse this
-             Ae usa normal la com {nome} <- 2 brackets, vai bugar aqui a página se tiver dois no comentário -->
-        {{> sidebar this}}
-
-        <div class="content-wrapper">
-
-            {{{body}}}
-
-        </div>
+        {{{_sections.sidebar}}}
+        <div class="content-wrapper"> {{{body}}} </div>
 
         <footer class="main-footer">
             <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
@@ -44,12 +26,29 @@
         </footer>
     </div>
 
-    <!-- Adicione plugin/scripts aqui se eles são usados em todas as views ou boa parte -->
+    <!-- Adicione plugin/scripts aqui -->
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/adminlte.js"></script>
     <script src="/js/toastr.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+
+    <script src="/js/core/main.min.js"></script>
+    <script src="/js/daygrid/main.min.js"></script>
+    <script src="/js/timegrid/main.min.js"></script>
+    <script src="/js/interaction/main.min.js"></script>
+    <script src="/js/bootstrap/main.min.js"></script>
+
+    <script src="/js/moment.min.js"></script>
+    <script src="/js/daterangepicker.js"></script>
+    <script src="/js/tempusdominus-bootstrap-4.js"></script>
+
+    <script src="/js/jquery.dataTables.js"></script>
+    <script src="/js/dataTables.bootstrap4.js"></script>
+
+    <script src="/js/jquery.overlayScrollbars.min.js"></script>
+
     <script>
         toastr.options = {
             "closeButton": true,
@@ -60,8 +59,7 @@
         }
     </script>
     <!-- Essa section é um helper, nas views, o que tiver dentro das {#section 'scripts'} 
-         vai ser substituido aqui, assim é possível chamar scripts especificos para uma página.
-         Ou tira isso e coloca todos os scripts aqui, mas acho que isso afeta a performace do site -->
+         vai ser substituido aqui, assim é possível chamar scripts especificos para uma página. -->
     {{{_sections.scripts}}}
 
 

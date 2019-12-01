@@ -8,8 +8,9 @@ const reservaController = require('../app/controllers/reserva');
 //MainController
 
 router.get('/' ,                    mainController.index);
-router.get('/sobre' ,               mainController.sobre);
-
+router.get('/teste1' ,              mainController.teste1);
+router.get('/teste2' ,              mainController.teste2);
+router.get('/teste3' ,              mainController.teste3);
 
 //salaController
 

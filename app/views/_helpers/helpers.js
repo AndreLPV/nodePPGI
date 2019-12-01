@@ -44,7 +44,7 @@ const isActive = (field) => (field) ? "active" : "";
 
 const isSelected = (val1, val2) => (val1 == val2) ? "selected" : "";
 
-const openMenu = (field) => (field) ? "menu-open" : "";
+const isMenuActive = (field) => (field) ? "menu-open" : "";
 
 const ddmmYYYY = (data) => moment(data).format('DD/MM/YYYY');
 
@@ -67,4 +67,4 @@ const jsoner = function (obj) {
     if (obj) return JSON.stringify(obj);
     return false;
 }
-module.exports = { deleteReservaButtonMaker,reservaArquivada, contarAtivos, toLower, toUpper, eq, inc, section, hasError, showError, jsoner, isActive, isSelected, openMenu, ddmmYYYY, ddmmYYYYHHmmss };
+module.exports = { deleteReservaButtonMaker,reservaArquivada, contarAtivos, toLower, toUpper, eq, inc, section, hasError, showError, jsoner, isActive, isSelected, isMenuActive, ddmmYYYY, ddmmYYYYHHmmss };

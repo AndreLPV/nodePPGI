@@ -1,0 +1,341 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+    <a href="#" class="brand-link">
+        <center class="brand-text center font-weight-light">ICOMP</center>
+    </a>
+
+
+    <div class="sidebar">
+
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="/img/iconUser.png" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">{{user.nome}} Nome</a>
+            </div>
+        </div>
+
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item">
+                    <a href="/" class="nav-link {{isActive menu_open_home}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Início</p>
+                    </a>
+                </li>
+
+                <li class="nav-header">Administração</li>
+
+                <li class="nav-item has-treeview {{isMenuActive menu_open_usuarios}}">
+                    <a href="#" class="nav-link {{isActive menu_open_usuarios}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Usuários <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link {{isActive nav_link_usuarios}}">
+                                <i class="fas fa-flag nav-icon"></i>
+                                <p>Option 1</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview {{isMenuActive menu_open_selecoes}}">
+                    <a href="#" class="nav-link {{isActive menu_open_selecoes}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Seleções PPGI <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link {{isActive nav_link_selecoes}}">
+                                <i class="fas fa-flag nav-icon"></i>
+                                <p>Option 1</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview {{isMenuActive menu_open_pesquisa}}">
+                    <a href="#" class="nav-link {{isActive menu_open_pesquisa}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Linha de Pesquisa <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link {{isActive nav_link_pesquisa}}">
+                                <i class="fas fa-flag nav-icon"></i>
+                                <p>Option 1</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+<!--
+                <li class="nav-header">Professor</li>
+                <li class="nav-item has-treeview {{isMenuActive menu_open_afastamento}}">
+                    <a href="#" class="nav-link {{isActive menu_open_afastamento}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Afastamento Temporário <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link {{isActive nav_link_afastamento}}">
+                                <i class="fas fa-flag nav-icon"></i>
+                                <p>Option 1</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/" class="nav-link {{isActive menu_open_ferias}}">
+                        <i class="nav-icon fas fa-flag"></i>
+                        <p>Minhas Férias</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/" class="nav-link {{isActive menu_open_reserva_professor}}">
+                        <i class="nav-icon fas fa-flag"></i>
+                        <p>Reserva de Sala</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/" class="nav-link {{isActive menu_open_orientandos}}">
+                        <i class="nav-icon fas fa-flag"></i>
+                        <p>Acompanhar Orientandos</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/" class="nav-link {{isActive menu_open_lattes}}">
+                        <i class="nav-icon fas fa-flag"></i>
+                        <p>Upload Lattes</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/" class="nav-link {{isActive menu_open_relatorio_bancas}}">
+                        <i class="nav-icon fas fa-flag"></i>
+                        <p>Gerar Relatório Bancas</p>
+                    </a>
+                </li>
+
+-->
+
+                <li class="nav-header">Secretaria</li>
+<!--
+                <li class="nav-item has-treeview {{isMenuActive menu_open_alunos}}">
+                    <a href="#" class="nav-link {{isActive menu_open_alunos}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Alunos <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link {{isActive nav_link_alunos}}">
+                                <i class="fas fa-flag nav-icon"></i>
+                                <p>Option 1</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item has-treeview {{isMenuActive menu_open_projetos}}">
+                    <a href="#" class="nav-link {{isActive menu_open_projetos}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Projetos <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link {{isActive nav_link_projetos}}">
+                                <i class="fas fa-flag nav-icon"></i>
+                                <p>Option 1</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/" class="nav-link {{isActive menu_open_disciplinas}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Gerenciar Disciplinas</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/" class="nav-link {{isActive menu_open_aproveitamentos}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Gerenciar Aproveitamentos</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/" class="nav-link {{isActive menu_open_prorrogacoes}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Gerenciar Prorrogações</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/" class="nav-link {{isActive menu_open_trancamentos}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Gerenciar Trancamentos</p>
+                    </a>
+                </li>
+
+                <li class="nav-item has-treeview {{isMenuActive menu_open_ferias}}">
+                    <a href="#" class="nav-link {{isActive menu_open_ferias}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Gerencias Férias <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link {{isActive nav_link_ferias}}">
+                                <i class="fas fa-flag nav-icon"></i>
+                                <p>Option 1</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+-->
+                <li class="nav-item has-treeview {{isMenuActive menu_open_reserva}}">
+
+                    <a href="#" class="nav-link {{isActive menu_open_reserva}}">
+                        <i class="nav-icon fas fa-building"></i>
+                        <p>
+                            Reserva de Sala
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/sala" class="nav-link {{isActive nav_link_sala}}">
+                                <i class="fas fa-cog nav-icon"></i>
+                                <p>Gerenciar Salas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/reserva" class="nav-link {{isActive nav_link_reserva}}">
+                                <i class="fas fa-calendar-check nav-icon"></i>
+                                <p>Reservar Sala</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+<!--
+                <li class="nav-item has-treeview {{isMenuActive menu_open_defesas}}">
+                    <a href="#" class="nav-link {{isActive menu_open_defesas}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Gerenciar Defesas <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link {{isActive nav_link_defesas}}">
+                                <i class="fas fa-flag nav-icon"></i>
+                                <p>Option 1</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item has-treeview {{isMenuActive menu_open_afastamento}}">
+                    <a href="#" class="nav-link {{isActive menu_open_afastamento}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Afastamento Temporário <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link {{isActive nav_link_afastamento}}">
+                                <i class="fas fa-flag nav-icon"></i>
+                                <p>Option 1</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/" class="nav-link {{isActive menu_open_csv_disciplinas}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Upload CSV Disciplinas</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/" class="nav-link {{isActive menu_open_csv_alunos}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Upload CSV Alunos</p>
+                    </a>
+                </li>
+
+                <li class="nav-item has-treeview {{isMenuActive menu_open_controle}}">
+                    <a href="#" class="nav-link {{isActive menu_open_controle}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Controle de Projetos <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link {{isActive nav_link_controle}}">
+                                <i class="fas fa-flag nav-icon"></i>
+                                <p>Option 1</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview {{isMenuActive menu_open_equipamentos}}">
+                    <a href="#" class="nav-link {{isActive menu_open_equipamentos}}">
+                        <i class="fas fa-flag nav-icon"></i>
+                        <p>Equipamentos <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link {{isActive nav_link_equipamentos}}">
+                                <i class="fas fa-flag nav-icon"></i>
+                                <p>Option 1</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+-->
+
+
+                <li class="nav-header">EXAMPLES</li>
+                <li class="nav-item has-treeview {{isMenuActive menu_open_teste}}">
+                    <a href="#" class="nav-link {{isActive menu_open_teste}}">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>
+                            Menu item com drop
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/teste1" class="nav-link {{isActive nav_link_teste1}}">
+                                <i class="fas fa-flag nav-icon"></i>
+                                <p>Link 1</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/teste2" class="nav-link {{isActive nav_link_teste2}}">
+                                <i class="fas fa-flag nav-icon"></i>
+                                <p>Link 2</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/teste3" class="nav-link {{isActive nav_link_teste3}}">
+                                <i class="fas fa-flag nav-icon"></i>
+                                <p>Link 3</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+            </ul>
+        </nav>
+    </div>
+</aside>

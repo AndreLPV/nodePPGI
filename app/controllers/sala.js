@@ -2,18 +2,13 @@ var models = require('../models/index');
 var Sala = models.j17_reservas_salas;
 var Reserva = models.j17_reservas;
 
-// Esse reservaMenu é pra o sideBar ficar ativo, tudo relacionado ao sidebar vai ser passado no obj active
-// Ruim é que tem que passar sempre nos res.render se quiser uma sidebar bonitinha que troca de cor dependendo da view 
-// Deve ter outro jeito mas Só consegui desse jeito pra trocar o ativo da sidebar 
-var reservaMenu = true;
-
 //Controlador da view index (View com as salas e as opções de ver, alterar, remover)
 const index = async (req, res) => {
     // Se quiser incluir as reservas de cada sala descomenta aqui embaixo, se quiser ver as associações.
     var salas = await Sala.findAll(/*{
         include: [{ model: Reserva, as: 'reservas' }]
     }*/);
-    res.render('sala/index', { salas ,active:{reservaMenu,salas:true}});
+    res.render('sala/index', { salas });
 };
 
 //Controlador da view create

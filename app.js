@@ -10,10 +10,10 @@ app.use(express.urlencoded({extended: false}));
 //Configurando handlebars
 //Utilizando partials para separar o header e o sidebar em arquivos próprios 
 app.engine('handlebars', handlebars({
-    layoutsDir: __dirname + '/app/views/diretorio_layouts',
-    partialsDir: __dirname + '/app/views/partials',
+    layoutsDir: __dirname + '/app/views/_layouts',
+    partialsDir: __dirname + '/app/views/_partials',
     defaultLayout: 'main',
-    helpers: require(__dirname + '/app/views/helpers/helpers.js')
+    helpers: require(__dirname + '/app/views/_helpers/helpers.js')
 }));
 
 app.set('view engine', 'handlebars');
@@ -48,14 +48,18 @@ app.use('/js', [
     express.static(__dirname + '/node_modules/popper.js/dist/umd'),
     express.static(__dirname + '/node_modules/bootstrap/dist/js'),
     express.static(__dirname + '/node_modules/@fortawesome/'),
-  
     express.static(__dirname + '/node_modules/admin-lte/dist/js'),
-    express.static(__dirname + '/node_modules'),
+    express.static(__dirname + '/node_modules/datatables.net/js'),
+    express.static(__dirname + '/node_modules/datatables.net-bs4/js'),
     express.static(__dirname + '/node_modules/toastr'),
     express.static(__dirname + '/node_modules/moment/min'),
     express.static(__dirname + '/node_modules/@fullcalendar'),
     express.static(__dirname + '/node_modules/daterangepicker'),
     express.static(__dirname + '/node_modules/tempusdominus-bootstrap-4/build/js'),
+    express.static(__dirname + '/node_modules/overlayscrollbars/js'),
+
+
+    
     express.static(__dirname + '/public/js')
 ]);
 
