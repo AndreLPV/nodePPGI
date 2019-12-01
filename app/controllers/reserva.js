@@ -4,6 +4,7 @@ var moment = require('moment');
 
 var Reserva = models.j17_reservas;
 var Sala = models.j17_reservas_salas;
+var User = models.j17_user;
 
 var reservaMenu = true;
 
@@ -139,11 +140,10 @@ const createLote = async (req, res) => {
 //Controlador da view read (disparado quando se clica nos olhos ou em qualquer reserva no calendário)
 const read = async (req, res) => {
 
-    // tive que chamar de salao porque sala é o campo que tem o id, se chamar de sala no include vai dá conflito e erro
+    // tive que chamar de salao porque sala é o campo que tem o id, se chamar de sala no include vai dá conflito e gerar uns erros.
     var reserva = await Reserva.findByPk(req.params.id, {
-        include: [{ model: Sala, as: 'salao' }]
+        include: [{ model: Sala, as: 'salao' }, { model: User, as: 'user' }]
     })
-    console.log(reserva)
     reserva.diaHoraReserva = moment(reserva.dataReserva).format("DD-MM-YYYY HH:mm:ss");
     res.render('reserva/read', { reserva, active: { reservaMenu } });
 };
@@ -177,15 +177,8 @@ const update = async (req, res) => {
 // Controlador da view remove (disparado quando se clica no lápis na view read)
 // Depois eu troco pra ser por modal e jquery o delete
 const remove = async (req, res) => {
-    if (req.route.methods.get) {
-        var reserva = await Reserva.findByPk(req.params.id, {
-            include: [{ model: Sala, as: 'salao' }]
-        });
-        res.render('reserva/remove', { reserva, active: { reservaMenu } });
-    } else {
-        await Reserva.destroy({ where: { id: req.body.id } });
-        res.redirect('/reserva');
-    }
+    await Reserva.destroy({ where: { id: req.body.id } });
+    res.redirect('/reserva');
 };
 
 
@@ -233,7 +226,7 @@ const calendario = async (req, res) => {
             await Reserva.create(req.body);
             res.redirect('/reserva');
         } catch (e) {
-            console.log(req.body.sala);
+
             var salas = await Sala.findAll();
             var sala = await Sala.findByPk(req.body.sala);
             var reservas = await Reserva.findAll({

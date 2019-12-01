@@ -13,83 +13,125 @@
                     <a href="/reserva/update/{{reserva.id}}" class="btn btn-info">
                         <i class="fas fa-pencil-alt"></i> Alterar
                     </a>
-                    <a href="/reserva/remove/{{reserva.id}}" class="btn btn-danger">
-                        <i class="fas fa-times"></i> Remover
-                    </a>
+
+                     <!--helper onde se for true a condição, mostra o que tá dentro dele 
+                        Pequena gambiarra visto que não se pode fazer comparação no #if do handlebars.
+                        {#if reserva.dataInicio > new Date()} não funciona e buga a página. 
+                        Pra acessar os valores nesse bloco tem que usar ../valor. -->
+
+                    {{#reservaArquivada reserva.dataInicio}}
+                    <a href="#" data-toggle="modal" data-target="#modal-delete" data-atividade="{{../reserva.atividade}}"
+                        class="btn btn-danger" data-reserva-id="{{../reserva.id}}"><i class="fas fa-times"></i> Remover</a>
+                    {{/reservaArquivada}}
+
+                    <!--Ou utilizar esse helper que gera a string html do botao passando os parametros.
+                        Porém se tiver que alterar o botão, vai ter que ir lá no helper alterar. -->
+
+                    <!--{{{deleteReservaButtonMaker reserva.dataInicio reserva.id reserva.atividade}}} -->
+
                 </div>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Página Inicial</a></li>
                     <li class="breadcrumb-item"><a href="/reserva">Reserva Salas</a></li>
-                    <li class="breadcrumb-item"><a href="/reserva/calendario/{{reserva.salao.id}}">{{reserva.salao.nome}}</a></li>
-                    <li class="breadcrumb-item active">Reserva: {{reserva.atividade}} para {{ddmmYYYY reserva.dataInicio}} - {{reserva.horaInicio}}</li>
+                    <li class="breadcrumb-item"><a
+                            href="/reserva/calendario/{{reserva.salao.id}}">{{reserva.salao.nome}}</a></li>
+                    <li class="breadcrumb-item active">Reserva: {{reserva.atividade}} para
+                        {{ddmmYYYY reserva.dataInicio}} - {{reserva.horaInicio}}</li>
                 </ol>
             </div>
         </div>
-    </div><!-- /.container-fluid -->
+    </div>
 </section>
 
 <section class="content">
     <div class="row">
         <div class="col">
-
             <div class="card">
                 <div class="card-body p-0">
-
-
                     <table class="table table-striped">
-
                         <tr>
                             <td>Data de Reserva</td>
-                            <td>{{reserva.diaHoraReserva}}</td>
+                            <td>{{ddmmYYYYHHmmss reserva.diaHoraReserva}}</td>
                         </tr>
-
                         <tr>
                             <td>Sala</td>
                             <td>{{reserva.salao.nome}}</td>
                         </tr>
-
                         <tr>
                             <td>Atividade</td>
                             <td>{{reserva.atividade}}</td>
                         </tr>
-
                         <tr>
                             <td>Tipo</td>
                             <td>{{reserva.tipo}}</td>
                         </tr>
-
                         <tr>
                             <td>Data de Início</td>
                             <td>{{ddmmYYYY reserva.dataInicio}}</td>
                         </tr>
-
                         <tr>
                             <td>Hora de Início</td>
                             <td>{{reserva.horaInicio}}</td>
                         </tr>
-
-                         <tr>
+                        <tr>
                             <td>Data de Término</td>
                             <td>{{ddmmYYYY reserva.dataTermino}}</td>
                         </tr>
-
                         <tr>
                             <td>Hora de Término</td>
                             <td>{{reserva.horaTermino}}</td>
                         </tr>
-
                         <tr>
                             <td>Socilitante da Reserva</td>
-                            <td>{{user.nome}}</td>
+                            <td>{{reserva.user.nome}}</td>
                         </tr>
-
-                        
-
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<div class="modal fade" id="modal-delete">
+    <div class="modal-dialog">
+        <div class="modal-content bg-danger">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmar</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="mt-2" role="form" action="/reserva/remove" method="POST">
+                <div class="modal-body">
+                    <p>Deseja excluir a reserva <span id="idModalAtividade"></span>?</p>
+                    <input type="hidden" name="id" id="idReserva">
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Não</button>
+                    <button type="submit" class="btn btn-outline-light">Sim</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{{#section 'scripts'}}
+
+<script>
+    $(function () {
+
+        $('#modal-delete').on('show.bs.modal', function (event) {
+            var btn = $(event.relatedTarget)
+            var reservaId = btn.data('reserva-id')
+            console.log(reservaId)
+            var atividade = btn.data('atividade')
+            var modal = $(this)
+            modal.find('.modal-body #idReserva').val(reservaId);
+            modal.find('.modal-body #idModalAtividade').text(atividade);
+        })
+    });
+</script>
+{{/section}}

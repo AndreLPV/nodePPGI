@@ -53,8 +53,9 @@
                                 <td class=" text-right">
                                     <a href="/sala/read/{{id}}"><i class="fas fa-eye"></i></a>
                                     <a href="/sala/update/{{id}}"><i class="fas fa-pen"></i></a>
-                                    
-                                    <a href="#" data-toggle="modal" data-target="#modal-delete" data-atividade="{{nome}}" data-sala-id="{{id}}"><i
+
+                                    <a href="#" data-toggle="modal" data-target="#modal-delete"
+                                        data-nome="{{nome}}" data-sala-id="{{id}}"><i
                                             class="fas fa-trash-alt"></i></a>
                                     <!--
                                     <a href="/sala/remove/{{id}}"><i
@@ -74,56 +75,26 @@
 
 </section>
 
-<div class="modal fade" id="modal-danger">
-    <div class="modal-dialog">
-        <div class="modal-content bg-danger">
-            <div class="modal-header">
-                <h4 class="modal-title">Danger Modal</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>One fine body&hellip;</p>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-outline-light">Save changes</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-
 <div class="modal fade" id="modal-delete">
     <div class="modal-dialog">
         <div class="modal-content bg-danger">
             <div class="modal-header">
-                <h4 class="modal-title">Confirmar delete</h4>
+                <h4 class="modal-title">Confirmar</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
-
-
             <form class="mt-2" role="form" action="/sala/remove" method="POST">
-
                 <div class="modal-body">
-                    <p>Deseja excluir a sala <span id="idModalAtividade"></span>?</p>
-                    <input type="hidden" name="id" id="idReserva">
+                    <p>Deseja excluir a sala <span id="idModalNome"></span>?</p>
+                    <input type="hidden" name="id" id="idSala">
                 </div>
-
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-outline-light" data-dismiss="modal">Não</button>
                     <button type="submit" class="btn btn-outline-light">Sim</button>
                 </div>
-
-
             </form>
         </div>
-
     </div>
 </div>
 
@@ -146,7 +117,35 @@
             ordering: true,
             info: true,
             autoWidth: false,
-            sDom: '<"top"i>rt<"bottom"flp><"clear">'
+            sDom: '<"top"i>rt<"bottom"flp><"clear">',
+            language: {
+                emptyTable: "Não há salas registradas",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ salas",
+                infoEmpty: "Mostrando 0 salas",
+                // Outras variáveis configuráveis
+                /*
+                infoFiltered: "(filtered from _MAX_ total entries)",
+                infoPostFix: "",
+                thousands: ",",
+                lengthMenu: "Show _MENU_ entries",
+                loadingRecords: "Loading...",
+                processing: "Processing...",
+                search: "Search:",
+                zeroRecords: "No matching records found",
+                aria: {
+                    sortAscending: ": activate to sort column ascending",
+                    sortDescending: ": activate to sort column descending"
+                }
+                */
+                paginate: {
+                    first: "Primeiro",
+                    last: "Último",
+                    next: "Próximo",
+                    previous: "Anterior"
+                },
+
+            },
+
         });
 
 
@@ -154,11 +153,11 @@
             var btn = $(event.relatedTarget)
             var salaId = btn.data('sala-id')
             console.log(salaId)
-            var atividade = btn.data('atividade')
+            var nome = btn.data('nome')
             var modal = $(this)
-           
-            modal.find('.modal-body #idReserva').val(salaId);
-            modal.find('.modal-body #idModalAtividade').text(atividade);
+
+            modal.find('.modal-body #idSala').val(salaId);
+            modal.find('.modal-body #idModalNome').text(nome);
         })
 
 

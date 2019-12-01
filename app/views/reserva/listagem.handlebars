@@ -57,7 +57,8 @@
                                 <td> {{horaTermino}}</td>
                                 <td class=" text-right">
                                     <a href="/reserva/read/{{id}}"><i class="fas fa-eye"></i></a>
-                                    <a href="/reserva/remove/{{id}}"><i class="fas fa-trash-alt"></i></a>
+                                    <a href="#" data-toggle="modal" data-target="#modal-delete" data-atividade="{{atividade}}"
+                                        data-reserva-id="{{id}}"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                             {{/each}}
@@ -69,9 +70,35 @@
             </div>
         </div>
     </div>
-
-
 </section>
+
+<div class="modal fade" id="modal-delete">
+    <div class="modal-dialog">
+        <div class="modal-content bg-danger">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmar</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="mt-2" role="form" action="/reserva/remove" method="POST">
+                <div class="modal-body">
+                    <p>Deseja excluir a reserva <span id="idModalAtividade"></span>?</p>
+                    <input type="hidden" name="id" id="idReserva">
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Não</button>
+                    <button type="submit" class="btn btn-outline-light">Sim</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 {{#section 'scripts'}}
 
 <script src="/js/datatables.net/js/jquery.dataTables.js"></script>
@@ -85,7 +112,31 @@
                 "orderable": false,
             }],
             language: {
-                emptyTable: "Esta sala não possui reservas agendadas no momento"
+                emptyTable: "Esta sala não possui reservas agendadas no momento",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ reservas",
+                infoEmpty: "Mostrando 0 reservas",
+                // Outras variáveis configuráveis
+                /*
+                infoFiltered: "(filtered from _MAX_ total entries)",
+                infoPostFix: "",
+                thousands: ",",
+                lengthMenu: "Show _MENU_ entries",
+                loadingRecords: "Loading...",
+                processing: "Processing...",
+                search: "Search:",
+                zeroRecords: "No matching records found",
+                aria: {
+                    sortAscending: ": activate to sort column ascending",
+                    sortDescending: ": activate to sort column descending"
+                }
+                */
+                paginate: {
+                    first: "Primeiro",
+                    last: "Último",
+                    next: "Próximo",
+                    previous: "Anterior"
+                },
+
             },
             pageLength: 20,
             paging: true,
@@ -96,6 +147,16 @@
             autoWidth: false,
             sDom: '<"top"i>rt<"bottom"flp><"clear">'
         });
+
+        $('#modal-delete').on('show.bs.modal', function (event) {
+            var btn = $(event.relatedTarget)
+            var reservaId = btn.data('reserva-id')
+            console.log(reservaId)
+            var atividade = btn.data('atividade')
+            var modal = $(this)
+            modal.find('.modal-body #idReserva').val(reservaId);
+            modal.find('.modal-body #idModalAtividade').text(atividade);
+        })
     });
 </script>
 {{/section}}

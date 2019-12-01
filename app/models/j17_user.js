@@ -163,10 +163,10 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     tableName: 'j17_user',
-    //timestamps: false
+    timestamps: false
   });
   user.associate = function (models) {
-    user.belongsTo(models.j17_reservas, {
+    user.hasMany(models.j17_reservas, {
       foreignKey: "idSolicitante",
       as: 'user'
     })
