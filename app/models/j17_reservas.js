@@ -82,7 +82,12 @@ module.exports = function (sequelize, DataTypes) {
     reserva.belongsTo(models.j17_reservas_salas, {
       foreignKey: "sala",
       as: 'salao'
-    })
+    });
+    reserva.belongsTo(models.j17_user, {
+      foreignKey: "idSolicitante",
+      as: 'user'
+    });
   };
+  
   return reserva
 };

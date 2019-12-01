@@ -68,3 +68,5 @@ app.use(router);
 app.listen(3000, function () {
     console.log("Express app iniciada na porta 3000.");
 });
+
+// npx sequelize-auto -o "app/models" -d sysicompteste -h localhost -e mysql -t j17_user -u salas -x senha123
